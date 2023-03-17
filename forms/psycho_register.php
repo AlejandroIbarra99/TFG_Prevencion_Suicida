@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       unset($_SESSION['psy_password']);
        echo "<script>
               setTimeout(function() {
-                window.location.href = '../index.html';
+                window.location.href = '../login/pages-login.php';
               }, 2000);
             </script>";
     } else {

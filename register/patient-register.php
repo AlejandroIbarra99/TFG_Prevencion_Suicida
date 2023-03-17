@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,42 +54,51 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Crear una cuenta</h5>
-                    <p class="text-center small">Escriba todos sus datos</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Crear una cuenta para su paciente</h5>
+                    <p class="text-center small">Escriba todos los datos</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" action="../forms/psycho_register.php" method="post">
+                  <form class="row g-3 needs-validation" action="../forms/patient_register.php" method="post">
                     <div class="col-12">
-                      <label for="yourName" class="form-label">Nº de colegiado</label>
-                      <input type="text" name="register_number" class="form-control" id="yourName" required>
-                      <div class="invalid-feedback">Por favor, introduzca su número de colegiado</div>
+                      <label for="yourName" class="form-label">Nombre del paciente</label>
+                      <input type="text" name="patient_name" class="form-control" id="yourName" required>
+                      <div class="invalid-feedback">Por favor, introduzca el nombre de su paciente</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourName" class="form-label">Nombre del profesional</label>
-                      <input type="text" name="psy_name" class="form-control" id="yourName" required>
-                      <div class="invalid-feedback">Por favor, introduzca su número de colegiado</div>
+                      <label for="yourEmail" class="form-label">DNI del paciente</label>
+                      <input type="text"  name="patient_dni" class="form-control" id="yourdni" required>
+                      <div class="invalid-feedback">Por favor, introduzca un DNI válido</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourEmail" class="form-label">DNI del profesional</label>
-                      <input type="text"  name="psy_dni" class="form-control" id="yourdni" required>
-                      <div class="invalid-feedback">Por favor, introduzca un DNI váldo</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label">Email del profesional</label>
+                      <label for="yourUsername" class="form-label">Email del paciente</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email" name="psy_email" class="form-control" id="yourUsername" required>
+                        <input type="email" name="patient_email" class="form-control" id="yourUsername" required>
                         <div class="invalid-feedback">Por favor, introduzca un email válido</div>
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Contraseña del profesional</label>
-                      <input type="password" name="psy_password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Por favor, introduzca su contraseña</div>
+                      <label for="yourUsername" class="form-label">Contraseña del paciente</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="email" name="patient_password" class="form-control" id="yourUsername" required>
+                        <div class="invalid-feedback">Por favor, introduzca un email válido</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Fecha de nacimiento del paciente</label>
+                      <input type="password" name="patient_birthday" class="form-control" id="yourPassword" placeholder="dd/MM/YY" required>
+                      <div class="invalid-feedback">Por favor, introduzca una contraseña</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Nº de colegiado</label>
+                      <input type="text" name="psy_register_number" class="form-control" id="yourName" required>
+                      <div class="invalid-feedback">Por favor, introduzca su número de colegiado</div>
                     </div>
 
                     <div class="col-12">

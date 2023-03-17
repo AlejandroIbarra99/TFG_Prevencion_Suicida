@@ -15,14 +15,15 @@ if ($conn->connect_error) {
 // Si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Recibimos los datos del formulario
-  $colegiado = $_POST["register_number"];
+  $colegiado = $_POST["psy_register_number"];
   $dni = $_POST["patient_dni"];
-  $email_paciente = $_POST["patient_email"];
-  $email_profesional = $_POST["psy_email"];
-  $contraseña = $_POST["psy_password"];
+  $name = $_POST["patient_name"];
+  $email = $_POST["patient_email"];
+  $birthdate = $_POST["patient_birthday"];
+  $contraseña = $_POST["patient_password"];
 
   // Creamos la consulta SQL para insertar los datos en la base de datos
-  $sql = "INSERT INTO patients (colegiado, dni, email_paciente, email_profesional, contraseña) VALUES ('$colegiado', '$dni', '$email_paciente', '$email_profesional', '$contraseña')";
+  $sql = "INSERT INTO patients (name, dni, email, password, birthdate, psychologist_registration_number) VALUES ( '$name', '$dni', '$email', '$contraseña', '$birthdate', '$colegiado')";
 
   // Ejecutamos la consulta y comprobamos si se insertó correctamente
   if ($conn->query($sql) === TRUE) {

@@ -11,8 +11,13 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Conexión fallida: " . $conn->connect_error);
 }
-$colegiado = $_SESSION['psy_register_number']; // Asegúrate de tener el número de colegiado del profesional logueado
-$sql = "SELECT * FROM patients WHERE psychologist_registration_number = '$colegiado'";
+ // Asegúrate de tener el número de colegiado del profesional logueado
+if (isset($_COOKIE["register_number"])) 
+{
+    $_SESSION['register_number'] = $_COOKIE['register_number'];
+}
+$colegiado = $_SESSION['register_number'];
+$sql = "SELECT * FROM patients WHERE psychologist_registration_number = '$colegiado' AND Active = 0";
 $result = $conn->query($sql);
 ?>
 
@@ -85,15 +90,9 @@ $result = $conn->query($sql);
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>Mi Espacio Seguro</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact-page.html">
-            <i class="bi bi-chat-square"></i>
-            <span>Contacto</span>
+          <a class="nav-link" href="patients.php">
+            <i class="bi bi-person-square"></i>
+            <span>Dashboard</span>
           </a>
         </li>
         <!-- End Login Page Nav -->
@@ -101,15 +100,15 @@ $result = $conn->query($sql);
         <!--<li class="nav-heading">Pages</li>-->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="">
-            <i class="bi bi-card-list"></i>
-            <span>Registro</span>
+          <a class="nav-link collapsed" href="#">
+            <i class="bi bi-chat-dots"></i>
+            <span>Chats</span>
           </a>
         </li>
         <!-- End Register Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="login/pages-login.php">
+          <a class="nav-link collapsed" href="../logout.php">
             <i class="bi bi-box-arrow-in-right"></i>
 
             <span>Cerrar Sesión</span>
@@ -157,6 +156,7 @@ $result = $conn->query($sql);
               echo "<td>" . $row["email"] . "</td>";
               echo "<td>" . $row["birthday"] . "</td>";
               echo "<td><input type='radio' name='selected_patient' value='{$row['id']}' onchange='showSafeZone(this.value)'></td>";
+              echo "<td><button class='btn btn-danger' onclick='deletePatient(\"" . $row['dni'] . "\")'>Dar de baja</button></td>";
               echo "</tr>";
 
             }
@@ -218,6 +218,12 @@ $result = $conn->query($sql);
       }
     };
     xhr.send();
+  }
+  function deletePatient(dni) {
+    if (confirm("¿Estás seguro de que deseas dar de baja a este paciente?")) {
+      // Llamar al archivo PHP para eliminar al paciente
+      window.location.href = "delete_patient.php?dni=" + dni;
+    }
   }</script>
   </body>
 </html>

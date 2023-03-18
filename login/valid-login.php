@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-if (isset($_COOKIE["user_id"]) && isset($_COOKIE["user_type"])) {
+if (isset($_COOKIE["user_id"]) && isset($_COOKIE["user_type"]) && isset($_COOKIE["register_number"])) {
     $_SESSION["user_id"] = $_COOKIE["user_id"];
     $_SESSION["user_type"] = $_COOKIE["user_type"];
+    $_SESSION["register_number"] = $_COOKIE["register_number"];
 
     if ($_SESSION["user_type"] == "patient") {
         header("Location: patient_dashboard.php");
@@ -42,23 +43,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result_patient->num_rows > 0) {
         $row = $result_patient->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_type'] = 'patient';
-
+        $_SESSION['user_type'] = 'patient';  
         if ($remember) {
-            setUserCookie($row['id'], 'patient');
+            setUserCookie($row['id'], 'patient', '');
         }
 
-        header("Location: ../chat.html");
+        header("Location: ../patients/safezone.html");
     } elseif ($result_psychologist->num_rows > 0) {
         $row = $result_psychologist->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_type'] = 'psychologist';
+        $_SESSION['psy_registration_number'] = $row['registration_number'];
+        $_SESSION['register_number'] = $row['registration_number'];
+        $registration_number = $row['registration_number'];  
+        setUserCookie($row['id'], 'psychologist', $row['registration_number']);
 
-        if ($remember) {
-            setUserCookie($row['id'], 'psychologist');
-        }
-
-        header("Location: ../psychos/index.html");
+        header("Location: ../psychos/patients.php");
     } else {
         // Si no se encuentra al usuario, muestra un mensaje de error
         $_SESSION['error_message'] = "Nombre de usuario o contraseña incorrectos";
@@ -69,11 +69,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerramos la conexión
 $conn->close();
 
-function setUserCookie($userId, $userType) {
+function setUserCookie($userId, $userType, $registration_number) {
     // Establece un tiempo de expiración para la cookie (por ejemplo, 30 días)
     $cookieExpiration = time() + (30 * 24 * 60 * 60);
 
     setcookie("user_id", $userId, $cookieExpiration, "/");
     setcookie("user_type", $userType, $cookieExpiration, "/");
+    if($userType == 'psychologist')
+    {
+        setcookie("register_number", $registration_number, $cookieExpiration, "/");   
+    }
+
 }
 ?>

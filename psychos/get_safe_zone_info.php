@@ -21,10 +21,13 @@ if (isset($_GET['id'])) {
 
   if ($result->num_rows > 0) {
     // Muestra la información de la 'safe zone' del paciente seleccionado en una tabla HTML
-    echo "<table class='table'>
+    echo "<table class='table table-striped table-hover'>
             <thead>
               <tr>
-                <th scope='col'>Safe Zone ID</th>
+                <th scope='col'>Contacto de emergencia</th>
+                <th scope='col'>Teléfono de contacto emergencia</th>
+                <th scope='col'>Planes de futuro</th>
+                <th scope='col'>Entrada a diario</th>
                 <!-- Agrega aquí más encabezados de columna según sea necesario -->
               </tr>
             </thead>
@@ -32,15 +35,18 @@ if (isset($_GET['id'])) {
 
     while ($row = $result->fetch_assoc()) {
       echo "<tr>
-              <td>{$row['id']}</td>
-              <!-- Agrega aquí más celdas de la 'safe zone' según sea necesario -->
+              <td>{$row['contact_name']}</td>
+              <td>{$row['contact_phone']}</td>
+              <td>{$row['plans_definition']}</td>
+              <td>{$row['daily_entry']}</td>
+              <!-- Agrega aquí más celdas del 'Espacio Seguro' según sea necesario -->
             </tr>";
     }
 
     echo "  </tbody>
           </table>";
   } else {
-    echo "No se encontró información de la 'safe zone' para el paciente seleccionado.";
+    echo "No se encontró información del 'Espacio Seguro' para el paciente seleccionado.";
   }
 }
 

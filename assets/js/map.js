@@ -3,10 +3,6 @@ var topPos = screen.width - 200;
 function chat(){
     window.open('./chat_app.html', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
 }
-
-function contact(){
-    window.open('./new-contact.html', 'Nuevo Contacto', '_blank, height=594, width=795');
-}
 function nuevopaciente(){
     window.open('../register/patient-register.php', 'Nuevo Paciente');
 }
@@ -74,3 +70,6 @@ var loadFile = function(event) {
     };
     reader.readAsDataURL(event.target.files[0]);
   };
+
+
+  

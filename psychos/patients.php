@@ -28,7 +28,7 @@ $result = $conn->query($sql);
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Contacto</title>
+    <title>Dashboard Profesionales</title>
     <meta content="Pagina contacto" name="description" />
     <meta content="telefono, pagina, contacto" name="keywords" />
 

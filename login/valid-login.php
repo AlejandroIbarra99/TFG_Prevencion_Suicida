@@ -43,12 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result_patient->num_rows > 0) {
         $row = $result_patient->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_type'] = 'patient';  
+        $_SESSION['user_type'] = 'patient';
+        $_SESSION['patient_id'] = $row['id'];  
         if ($remember) {
-            setUserCookie($row['id'], 'patient', '');
+            setUserCookie($row['id'], 'patient', $row['id']);
         }
 
-        header("Location: ../patients/safezone.html");
+        header("Location: ../patients/safezone.php");
     } elseif ($result_psychologist->num_rows > 0) {
         $row = $result_psychologist->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
@@ -78,6 +79,10 @@ function setUserCookie($userId, $userType, $registration_number) {
     if($userType == 'psychologist')
     {
         setcookie("register_number", $registration_number, $cookieExpiration, "/");   
+    }
+    if($userType == 'patient')
+    {
+        setcookie("patient_id", $registration_number, $cookieExpiration, "/");   
     }
 
 }

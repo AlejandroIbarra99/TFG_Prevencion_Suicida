@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ejecutamos la consulta y comprobamos si se insertó correctamente
     if ($conn->query($sql) === TRUE) {
       echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Profesional registrado correctamente. Redirigiendo...</h5></div>";
-      unset($_SESSION['register_number']);
       unset($_SESSION['psy_dni']);
       unset($_SESSION['psy_name']);
       unset($_SESSION['psy_email']);

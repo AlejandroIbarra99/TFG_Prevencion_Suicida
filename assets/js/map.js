@@ -7,7 +7,9 @@ function chat(){
 function contact(){
     window.open('./new-contact.html', 'Nuevo Contacto', '_blank, height=594, width=795');
 }
-
+function nuevopaciente(){
+    window.open('../register/patient-register.php', 'Nuevo Paciente');
+}
 
 function photo(){
     window.open('./add-photos.html', 'Nuevo Contacto', '_blank, height=594, width=795');

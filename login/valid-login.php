@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             setUserCookie($row['id'], 'psychologist');
         }
 
-        header("Location: ../add-photos.html");
+        header("Location: ../psychos/index.html");
     } else {
         // Si no se encuentra al usuario, muestra un mensaje de error
         $_SESSION['error_message'] = "Nombre de usuario o contraseña incorrectos";

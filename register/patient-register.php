@@ -55,27 +55,38 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Crear una cuenta para su paciente</h5>
-                    <p class="text-center small">Escriba todos los datos</p>
+                    <p class="text-center small">Escriba todos los datos del paciente</p>
                   </div>
 
                   <form class="row g-3 needs-validation" action="../forms/patient_register.php" method="post">
                     <div class="col-12">
                       <label for="yourName" class="form-label">Nombre del paciente</label>
-                      <input type="text" name="patient_name" class="form-control" id="yourName" required>
+                      <input type="text" name="patient_name" class="form-control" id="yourName" 
+                      value="<?php echo isset($_SESSION['patient_name']) ? $_SESSION['patient_name'] : ''; ?>" required>
                       <div class="invalid-feedback">Por favor, introduzca el nombre de su paciente</div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">DNI del paciente</label>
-                      <input type="text"  name="patient_dni" class="form-control" id="yourdni" required>
+                      <input type="text"  name="patient_dni" class="form-control" id="yourdni" 
+                      value="<?php echo isset($_SESSION['patient_dni']) ? $_SESSION['patient_dni'] : ''; ?>" required>
                       <div class="invalid-feedback">Por favor, introduzca un DNI válido</div>
                     </div>
+
+                    <div class="col-12">
+                      <label for="patientBirthday" class="form-label">Fecha de nacimiento del paciente</label>
+                      <input type="date" name="patient_birthday" class="form-control" id="patientBirthday" required
+                            value="<?php echo isset($_SESSION['patient_birthday']) ? $_SESSION['patient_birthday'] : ''; ?>">
+                      <div class="invalid-feedback">Por favor, introduzca una fecha válida</div>
+                    </div>
+
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email del paciente</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email" name="patient_email" class="form-control" id="yourUsername" required>
+                        <input type="email" name="patient_email" class="form-control" id="yourUsername" 
+                        value="<?php echo isset($_SESSION['patient_email']) ? $_SESSION['patient_email'] : ''; ?>" required>
                         <div class="invalid-feedback">Por favor, introduzca un email válido</div>
                       </div>
                     </div>
@@ -83,21 +94,16 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Contraseña del paciente</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email" name="patient_password" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Por favor, introduzca un email válido</div>
+                        <input type="password" name="patient_password" class="form-control" id="yourUsername" required>
+                        <div class="invalid-feedback">Por favor, introduzca una contraseña válida</div>
                       </div>
                     </div>
 
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Fecha de nacimiento del paciente</label>
-                      <input type="password" name="patient_birthday" class="form-control" id="yourPassword" placeholder="dd/MM/YY" required>
-                      <div class="invalid-feedback">Por favor, introduzca una contraseña</div>
-                    </div>
 
                     <div class="col-12">
                       <label for="yourName" class="form-label">Nº de colegiado</label>
-                      <input type="text" name="psy_register_number" class="form-control" id="yourName" required>
+                      <input type="text" name="psy_register_number" class="form-control" id="yourName" 
+                      value="<?php echo isset($_SESSION['psy_register_number']) ? $_SESSION['psy_register_number'] : ''; ?>" required>
                       <div class="invalid-feedback">Por favor, introduzca su número de colegiado</div>
                     </div>
 

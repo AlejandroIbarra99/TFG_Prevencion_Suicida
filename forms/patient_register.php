@@ -59,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
       echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Paciente registrado correctamente. Redirigiendo...</h5></div>";
       echo "<script>
-              setTimeout(function() {
-                window.close();
-              }, 2000);
-            </script>";
+            setTimeout(function() {
+              window.location.href = '../psychos/patients.php';
+            }, 2000);
+          </script>";
     } else {
       echo "Error al registrar al paciente: " . $conn->error;
     }

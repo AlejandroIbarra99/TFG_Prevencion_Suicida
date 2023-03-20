@@ -3,8 +3,8 @@ var topPos = screen.width - 200;
 function chat(){
     window.open('./chat_app.html', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
 }
-function nuevopaciente(){
-    window.open('../register/patient-register.php', 'Nuevo Paciente');
+function nuevopaciente() {
+    window.location.href = '../register/patient-register.php';
 }
 
 function photo(){

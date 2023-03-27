@@ -19,7 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['contactName'];
     $telefono = $_POST['contactPhone'];
     $imagen = $_FILES['NewImage'];
-    
+    if ($_FILES['NewImage']['error'] !== UPLOAD_ERR_OK) {
+        die("Error al subir el archivo. Código de error: " . $_FILES['NewImage']['error']);
+      }
+      
+      if (!is_uploaded_file($_FILES['NewImage']['tmp_name'])) {
+        die("Error al subir el archivo. El archivo no se ha subido correctamente.");
+      }
+      
     // Creamos la carpeta temporal si no existe
     $temp_folder = 'temp_files/';
     if (!file_exists($temp_folder)) {
@@ -43,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Guardar imagen en servidor
-    $img_dir = 'contact_photos/';
+    $img_dir = 'temp_files/';
     $img_name = uniqid() . '_' . $imagen['name'];
     $img_path = $img_dir . $img_name;
     $temp_path = $temp_folder . $imagen['name'];
@@ -55,30 +62,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sssi", $nombre, $telefono, $img_name, $_SESSION['patient_id']);
             $stmt->execute();
 
-// Ejecutar consulta preparada
-if ($stmt->execute()) {
-    // Obtener el id del contacto insertado
-    $contact_id = $conn->insert_id;
+            // Ejecutar consulta preparada
+            if ($stmt->affected_rows > 0) {
+                // Obtener el id del contacto insertado
+                $contact_id = $stmt->insert_id;
 
-    // Mover la imagen a la carpeta compartida
-    $img_dir = "../temp_files/";
-    $img_name = basename($imagen["name"]);
-    $img_path = $img_dir . $img_name;
+                // Mover la imagen a la carpeta compartida
+                $img_dir_shared = "temp_files/";
+                $img_name_shared = basename($imagen["name"]);
+                $img_path_shared = $img_dir_shared . $img_name_shared;
 
-    if (!move_uploaded_file($imagen["tmp_name"], $img_path)) {
-        echo "Error al cargar el archivo de imagen.";
-        exit();
-    }
+                if (!move_uploaded_file($imagen["tmp_name"], $img_path_shared)) {
+                    echo "Error al cargar el archivo de imagen.";
+                    exit();
+                }
 
-    // Renombrar la imagen para evitar conflictos de nombres
-    $img_ext = pathinfo($img_path, PATHINFO_EXTENSION);
-    $new_img_name = $contact_id . "_" . uniqid() . "." . $img_ext;
-    $new_img_path = $img_dir . $new_img_name;
+                // Renombrar la imagen para evitar conflictos de nombres
+                $img_ext = pathinfo($img_path_shared, PATHINFO_EXTENSION);
+                $new_img_name = $contact_id . "_" . uniqid() . "." . $img_ext;
+                $new_img_path = $img_dir_shared . $new_img_name;
 
-    if (!rename($img_path, $new_img_path)) {
-        echo "Error al renombrar la imagen.";
-        exit();
-    }
+                if (!rename($img_path_shared, $new_img_path)) {
+                    echo "Error al renombrar la imagen.";
+                    exit();
+                }
 
     // Actualizar la base de datos con el nuevo nombre de la imagen
     $stmt = $conn->prepare("UPDATE contacts SET contact_photo = ? WHERE contact_id = ?");
@@ -99,12 +106,12 @@ if ($stmt->execute()) {
 } else {
     echo "Error al guardar el contacto: " . $conn->error;
 }
-    
+$stmt->close();
 }
 
 }
 // Cerrar la conexión y la consulta preparada
-$stmt->close();
+
 $conn->close();
 }
 ?>

@@ -66,23 +66,25 @@
             <div class="card-body">
               <h5 class="card-title">Insertar nuevo contacto de confianza</h5>
               <table id="tablecontact">
-                <tr>
-                  <td><label>Introduzca el nombre de su contacto:</label>&nbsp;<input class="text" type="text" id="contactName" maxlength="50"></td>
-                  <td>
-                    <br>
-                    <p> <input type="file" id="AddNewImage" accept="image/*" onchange="document.getElementById('NewImage').src = window.URL.createObjectURL(this.files[0])" />
-                  </p>
+                <form action="./save_contact.php" method="post" enctype="multipart/form-data">
+                  <tr>
+                    <td><label>Introduzca el nombre de su contacto:</label>&nbsp;<input class="text" type="text" name="contactName" maxlength="50"></td>
+                    <td>
+                      <br>
+                      <input type="file" name="NewImage" accept="image/*" onchange="document.getElementById('NewImagePreview').src = window.URL.createObjectURL(this.files[0])" />
                     </td>
-                </tr>
-                <tr>
-                  <td><label>Introduzca el número de su contacto: </label>&nbsp;<input type="tel" id="contactPhone"
-                      pattern="\([0-9]{3}\) [0-9]{3}[ -][0-9]{3}" 
-                    title="Introduzca un numero de telefono válido compuesto de 9 digitos" required></td>
-                  <td><img class="imagenes" id="NewImage" alt="Introduzca su imagen"/></td>
-                </tr>
+                  </tr>
+                  <tr>
+                    <td><label>Introduzca el número de su contacto: </label>&nbsp;<input type="tel" name="contactPhone" title="Introduzca un numero de telefono válido compuesto de 9 digitos" required></td>
+                   <!-- Preview de la imagen -->
+                    <td><img id="NewImagePreview" class="imagenes" src="../assets/img/placeholder.png" alt="Introduzca su imagen" /></td>
+                  </tr>
+                  <tr>
+                  <td><br><button class="btn btn-primary" type="submit">Guardar contacto</button></td>
+                  </tr>
+                </form>
               </table>
               <br>
-              <button id="btnSaveContact" class="btn btn-primary me-md-2" onclick="collectContactData()">Guardar contacto</button>
             </div>
           </div>
 
@@ -108,36 +110,7 @@
   <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="../assets/vendor/php-email-form/validate.js"></script>
-
-  <script>
-    function collectContactData() {
-        const contactName = document.getElementById('contactName').value;
-        const contactPhone = document.getElementById('contactPhone').value;
-        const contactImage = document.getElementById('NewImage').src;
-
-        const contact = {
-            name: contactName,
-            phone: contactPhone,
-            image: contactImage
-        };
-
-        saveContactToDatabase(contact);
-    }
-
-    function saveContactToDatabase(contact) {
-        $.ajax({
-            type: 'POST',
-            url: 'save_contact.php',
-            data: { contact: JSON.stringify(contact) },
-            success: function (response) {
-                alert('Contacto guardado exitosamente');
-            },
-            error: function (error) {
-                alert('Error al guardar el contacto');
-            }
-        });
-    }
-</script>    
+  
 
 </body>
 

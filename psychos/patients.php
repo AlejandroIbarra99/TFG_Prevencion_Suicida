@@ -174,8 +174,6 @@ $result = $conn->query($sql);
         <div class="card-body pb-0">
             <h5 class="card-title text-center pb-0 fs-4">Información de su paciente</h5>
             <div id="safe_zone_info" class="mt-4">
-
-
             </div>
         </div>
     </div>

@@ -103,7 +103,7 @@
                     <div class="col-12">
                       <label for="yourName" class="form-label">Nº de colegiado</label>
                       <input type="text" name="psy_register_number" class="form-control" id="yourName" 
-                      value="<?php echo isset($_SESSION['psy_register_number']) ? $_SESSION['psy_register_number'] : ''; ?>" required>
+                      value="<?php echo isset($_SESSION['register_number']) ? $_SESSION['register_number'] : ''; ?>" required>
                       <div class="invalid-feedback">Por favor, introduzca su número de colegiado</div>
                     </div>
 

@@ -53,7 +53,9 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
+    <div class="ms-auto" style="margin-right: 150px;">
+      <b><i class="bi bi-heart-fill"></i>&nbsp;&nbsp; Paciente</b>
+    </div>
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
@@ -184,15 +186,24 @@
             <div class="col-12">
               <div class="card top-selling overflow-auto">
 
-                <div class="filter">
+                <!-- <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown">Nueva entrada <i class="bi bi-plus-circle"></i></a>
-                </div>
+                </div>-->
 
-                <div class="card-body pb-0">
+                <div class="card-body auto-size">
                   <h5 class="card-title">Mi diario</h5>
-                    <textarea id="w3review" name="w3review" rows="10" cols="130"></textarea>
-                </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <textarea id="dailytext" name="dailytext" rows="10" cols="50"></textarea>
+                    <div id="dailyentries">
 
+                    </div>
+                  </div>
+                   
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <button id="btnSaveDiary" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
+                  <button id="btnShowDiary" class="btn btn-secondary" style="width: 48%;" onclick="showDaily(<?php $_SESSION['user_id'] ?>)">Ver diario</button>
+                </div>
               </div>
             </div><!-- End  -->
 
@@ -311,10 +322,22 @@
   <script src="../assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File 
-  <script src="../assets/js/main.js"></script>
+  <script></script>
   
   <script src="../assets/js/calendar.js"></script>-->
-  <script src="js/main.js"></script>               
+  <script defer src="js/main.js"></script>  
+  <script>function showDiary(id) {
+    // Realiza una solicitud AJAX para obtener la información de la 'safe zone' del paciente seleccionado
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "daily.php?id=" + id, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        document.getElementById("dailyentries").innerHTML = xhr.responseText;
+      }
+    };
+    xhr.send();
+  }
+</script>             
 
 </body>
 

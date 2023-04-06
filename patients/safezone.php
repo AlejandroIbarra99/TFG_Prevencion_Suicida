@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,22 +127,9 @@
 
                   <!-- Line Chart -->
                   <div id="reportsChart">
-                    <div class="column1">
-                      <a class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="tel:626 2"><img class="card-icon rounded-circle d-flex align-items-center justify-content-center" src="../assets/img/messages-2.jpg"/></a>
-                      <span>Mamá</span>
-                    </div>
-                    <div class="column">
-                      <a  class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="tel:727 2"><img class="card-icon rounded-circle d-flex align-items-center justify-content-center" src="assets/img/messages-3.jpg"/></a>
-                      <span>Papá</span>
-                    </div>
-                    <div class="column">
-                      <a class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="tel:747 8"><img class="card-icon rounded-circle d-flex align-items-center justify-content-center" src="assets/img/messages-1.jpg"/></a>
-                      <span>Sister</span>
-                    </div>
-                    <div class="column">
-                      <a class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="tel:+34 911385385"><img class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="" src="assets/img/profile-img.jpg"/></a>
-                      <span>Amor<i class="bi bi-heart"></i></span>
-                    </div>
+                  		<?php
+                        include 'showcontacts.php';
+                      ?>
                   <!-- End Line Chart -->
                   </div>
 
@@ -195,7 +187,9 @@
                   <div style="display: flex; justify-content: space-between;">
                     <textarea id="dailytext" name="dailytext" rows="10" cols="50"></textarea>
                     <div id="dailyentries">
-
+                    <?php
+                        include './daily.php';
+                      ?>
                     </div>
                   </div>
                    

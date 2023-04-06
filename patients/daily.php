@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Conectamos con la base de datos
 $servername = "localhost";
@@ -15,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = $_SESSION['pacient_id'];
 
     // Realiza la consulta SQL para obtener las entradas del diario del paciente seleccionado
     $sql = "SELECT daily_date, daily_entry FROM dailys WHERE patient_id = '$id' group by daily_date ORDER BY daily_date DESC";

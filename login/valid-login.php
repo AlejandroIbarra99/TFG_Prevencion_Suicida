@@ -45,9 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_type'] = 'patient';
         $_SESSION['patient_id'] = $row['id'];  
-        if ($remember) {
-            setUserCookie($row['id'], 'patient', $row['id']);
-        }
+        setUserCookie($row['id'], 'patient', $row['id']);
 
         header("Location: ../patients/safezone.php");
     } elseif ($result_psychologist->num_rows > 0) {

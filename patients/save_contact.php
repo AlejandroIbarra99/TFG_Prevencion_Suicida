@@ -18,21 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibimos los datos del formulario
     $nombre = $_POST['contactName'];
     $telefono = $_POST['contactPhone'];
-    $imagen = $_FILES['NewImage'];
-    if ($_FILES['NewImage']['error'] !== UPLOAD_ERR_OK) {
-        die("Error al subir el archivo. Código de error: " . $_FILES['NewImage']['error']);
-      }
+    $imagen = $_FILES['NewImage']['tmp_name'];
       
-      if (!is_uploaded_file($_FILES['NewImage']['tmp_name'])) {
-        die("Error al subir el archivo. El archivo no se ha subido correctamente.");
-      }
-      
-    // Creamos la carpeta temporal si no existe
-    $temp_folder = 'temp_files/';
-    if (!file_exists($temp_folder)) {
-        mkdir($temp_folder, 0777, true);
-    }
-
     // Validación de datos
     if (empty($nombre) || empty($telefono) || empty($imagen)) {
         echo "Todos los campos son obligatorios.";
@@ -49,69 +36,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Guardar imagen en servidor
-    $img_dir = 'temp_files/';
-    $img_name = uniqid() . '_' . $imagen['name'];
-    $img_path = $img_dir . $img_name;
-    $temp_path = $temp_folder . $imagen['name'];
-    
-    if (move_uploaded_file($imagen['tmp_name'], $temp_path)) {
-        if (rename($temp_path, $img_path)) {
-            // Preparar consulta preparada y vincular los parámetros
-            $stmt = $conn->prepare("INSERT INTO contacts (contact_name, contact_phone, contact_photo, patient_id) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("sssi", $nombre, $telefono, $img_name, $_SESSION['patient_id']);
-            $stmt->execute();
+    // Convertir la imagen a un BLOB
+    $imagen_blob = file_get_contents($imagen);
 
-            // Ejecutar consulta preparada
-            if ($stmt->affected_rows > 0) {
-                // Obtener el id del contacto insertado
-                $contact_id = $stmt->insert_id;
-
-                // Mover la imagen a la carpeta compartida
-                $img_dir_shared = "temp_files/";
-                $img_name_shared = basename($imagen["name"]);
-                $img_path_shared = $img_dir_shared . $img_name_shared;
-
-                if (!move_uploaded_file($imagen["tmp_name"], $img_path_shared)) {
-                    echo "Error al cargar el archivo de imagen.";
-                    exit();
-                }
-
-                // Renombrar la imagen para evitar conflictos de nombres
-                $img_ext = pathinfo($img_path_shared, PATHINFO_EXTENSION);
-                $new_img_name = $contact_id . "_" . uniqid() . "." . $img_ext;
-                $new_img_path = $img_dir_shared . $new_img_name;
-
-                if (!rename($img_path_shared, $new_img_path)) {
-                    echo "Error al renombrar la imagen.";
-                    exit();
-                }
-
-    // Actualizar la base de datos con el nuevo nombre de la imagen
-    $stmt = $conn->prepare("UPDATE contacts SET contact_photo = ? WHERE contact_id = ?");
-    $stmt->bind_param("si", $new_img_name, $contact_id);
+    // Preparar consulta preparada y vincular los parámetros
+    $stmt = $conn->prepare("INSERT INTO contacts (contact_name, contact_phone, contact_photo, patient_id) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("sssi", $nombre, $telefono, $imagen_blob, $_SESSION['patient_id']);
     $stmt->execute();
 
-    // Verificar si la actualización fue exitosa
+    // Ejecutar consulta preparada
     if ($stmt->affected_rows > 0) {
         echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Contacto registrado correctamente. Redirigiendo...</h5></div>";
         echo "<script>
               setTimeout(function() {
-                window.location.href = './index.php';
+                window.location.href = './safezone.php';
               }, 2000);
             </script>";
     } else {
-        echo "Error al actualizar el nombre de la imagen en la base de datos: " . $conn->error;
+        echo "Error al guardar el contacto: " . $conn->error;
     }
-} else {
-    echo "Error al guardar el contacto: " . $conn->error;
-}
-$stmt->close();
+    $stmt->close();
 }
 
-}
 // Cerrar la conexión y la consulta preparada
-
 $conn->close();
-}
-?>

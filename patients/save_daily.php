@@ -24,7 +24,7 @@ $stmt = $conn->prepare("INSERT INTO dailys (daily_entry, patient_id) VALUES (?, 
 $stmt->bind_param("ss", $entrada, $patientid);
 
 // Obtenemos el ID del paciente de la sesión del usuario
-$patientid = $_SESSION["user_id"];
+$patientid = $_SESSION["patient_id"];
 
 // Establecemos los parámetros y ejecutamos la consulta
 if (isset($_POST['diaryEntry'])) {

@@ -15,13 +15,14 @@ if ($conn->connect_error) {
 
 // Obtener datos del formulario enviado desde el cliente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $plans = $_POST['plan'];
-    $done = isset($_POST['done']) ? $_POST['done'] : array();
+    $plans = isset($_POST['plan']) ? $_POST['plan'] : array();
+    $is_done = isset($_POST['done'][$i]) && $_POST['done'][$i] == "on" ? 1 : 0;
 
     $data = array();
 
     // Validación y eliminación de planes duplicados
     foreach ($plans as $key => $plan) {
+        $plan = trim($plan);
         // Comprobar si el plan ya existe en la base de datos
         $stmt = $conn->prepare("SELECT id FROM plans WHERE plans_definition = ? AND patient_id = ?");
         $stmt->bind_param("si", $plan, $_SESSION['patient_id']);
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->num_rows == 0) {
             // El plan no existe en la base de datos, guardarlo
-            $is_done = in_array($key, $done) ? 1 : 0;
+            $is_done = isset($done[$key]) && $done[$key] ? 1 : 0;
             $data[] = array('plan' => $plan, 'is_done' => $is_done);
         }
         $stmt->close();
@@ -43,8 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sii", $plan, $is_done, $_SESSION['patient_id']);
 
         foreach ($data as $plan) {
-            $plan = isset($plan['plan']);
-            $realizado = isset($plan['is_done']) && $plan['is_done'] ? 1 : 0;
+            $plan = isset($plan['plan']) ? $plan['plan'] : "";
+            $is_done = isset($plan['is_done']) && $plan['is_done'] ? 1 : 0;
+            $stmt->bind_param("sii", $plan, $is_done, $_SESSION['patient_id']);
             $stmt->execute();
         }
         $stmt->close();
@@ -56,11 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               }, 2000);
             </script>";
     } else {
-        echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>No se han registrado nuevos planes. Redirigiendo...</h5></div>";
         echo "<script>
               setTimeout(function() {
                 window.location.href = './safezone.php';
-              }, 2000);
+              }, 100);
             </script>";
     }
 }

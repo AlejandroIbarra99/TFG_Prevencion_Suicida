@@ -17,19 +17,23 @@ if (isset($_SESSION['patient_id'])) {
 }
 
 // Consulta a la base de datos
-$sql = "SELECT contact_name, contact_phone, contact_photo FROM contacts where patient_id =" . $id;
+$sql = "SELECT plans_definition, plans_done FROM plans where patient_id =" . $id . " AND plans_done = 0";
 $resultado = $conn->query($sql);
 
-// Mostrar los contactos
+// Mostrar los planes futuros
 if ($resultado->num_rows > 0) {
+  echo "<table>";
+  echo "<thead><tr><th>Plan</th><th>Realizado</th></tr></thead>";
+  echo "<tbody>";
   while($fila = $resultado->fetch_assoc()) {
-    echo '<div class="column">';
-    echo '<a class="card-icon rounded-circle d-flex align-items-center justify-content-center" href="tel:'.$fila["contact_phone"].'"><img class="card-icon" src="data:image/jpeg;base64,'.base64_encode($fila["contact_photo"]).'" alt="Foto de '.$fila["contact_name"].'"></a>';
-    echo '<span>'.$fila["contact_name"].'</span>';
-    echo '</div>';
+    echo "<tr>";
+    echo "<td><input type='label' hidden name='plan[]' value='".$fila["plans_definition"]."'><label>".$fila["plans_definition"]."</label></td>";
+    echo "<td><input type='checkbox' name='done[]'></td>";
+    echo "</tr>";
   }
+  echo "</tbody></table>";
 } else {
-  echo "No hay contactos disponibles";
+  echo "No hay planes futuros disponibles";
 }
 
 // Cierre de la conexión a la base de datos

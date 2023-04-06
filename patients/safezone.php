@@ -142,34 +142,34 @@ session_start();
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
-                <div class="filter">
+              <!--  <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-plus-circle"></i></a>
-                </div>
+                </div>-->
 
                 <div class="card-body">
                   <h5 class="card-title">Planes de futuro</h5>
-                  <form class="checkInfo">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td><input type="checkbox" id="checkbox_1"> <label class="futureinfo" for="checkbox_1"> Viajar a Los Ángeles con mi Sister </label></td>
-                        </tr>
-                        <tr>
-                          <td><input type="checkbox" id="checkbox_2"> <label class="futureinfo" for="checkbox_2"> Sacarme la carrera de Psicología </label></td>
-                        </tr>
-                        <tr>
-                          <td><input type="checkbox" id="checkbox_3"> <label class="futureinfo" for="checkbox_3"> Tener mi propia consulta de psicología </label></td>
-                        </tr>
-                        <tr>
-                          <td><input type="checkbox" id="checkbox_4"> <label class="futureinfo" for="checkbox_4"> Adoptar a un perro </label></td>
-                        </tr>
-                        <tr>
-                          <td><input type="checkbox" id="checkbox_5"> <label class="futureinfo" for="checkbox_5"> Cuidar de mi familia </label></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
+                  <form class="checkInfo" action="save_plans.php" method="POST">
+                  <table id="plans">
+                    <thead>
+                      <tr>
+                        <th>Plan</th>
+                        <th>Realizado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php include 'showplans.php'; ?>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td style="display: flex; justify-content: space-between;" colspan="2">
+                          <button class="btn btn-primary" style="width: 48%;" type="button" onclick="addPlan()">Agregar nuevo plan</button>
+                          <button class="btn btn-secondary" style="width: 48%;" type="submit" onclick="savePlans()">Guardar</button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </form>
+              </div>
 
               </div>
             </div><!-- End -->
@@ -192,12 +192,13 @@ session_start();
                       ?>
                     </div>
                   </div>
-                   
+                  <br>
+                  <div style="display: flex; justify-content: space-between;">
+                    <button id="btnSaveDiary" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
+                    <button id="btnShowDiary" class="btn btn-secondary" style="width: 48%;" onclick="showDaily(<?php $_SESSION['user_id'] ?>)">Ver diario</button>
+                  </div>  
                 </div>
-                <div style="display: flex; justify-content: space-between;">
-                  <button id="btnSaveDiary" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
-                  <button id="btnShowDiary" class="btn btn-secondary" style="width: 48%;" onclick="showDaily(<?php $_SESSION['user_id'] ?>)">Ver diario</button>
-                </div>
+
               </div>
             </div><!-- End  -->
 
@@ -331,6 +332,55 @@ session_start();
     };
     xhr.send();
   }
+
+  function addPlan() {
+  let count = 1;
+  document.querySelector("#plans tbody").innerHTML = "";
+  var table = document.querySelector("#plans tbody");
+  var row = document.createElement("tr");
+  var cell1 = document.createElement("td");
+  var cell2 = document.createElement("td");
+  var input1 = document.createElement("input");
+  var input2 = document.createElement("input");
+  
+  input1.type = "text";
+  input1.name = "plan[]";
+  input2.type = "checkbox";
+  input2.name = "done[]";
+  
+  cell1.appendChild(input1);
+  cell2.appendChild(input2);
+  row.appendChild(cell1);
+  row.appendChild(cell2);
+  
+  table.appendChild(row);
+
+}
+
+
+function savePlans() {
+
+  var plans = document.getElementsByName("plan[]");
+  var done = document.getElementsByName("done[]");
+  var data = [];
+  for (var i = 0; i < plans.length; i++) {
+    var plan = plans[i].value;
+    var is_done = done[i].checked ? 1 : 0;
+    data.push({plan: plan, is_done: is_done});
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      alert("Los planes se han guardado correctamente.");
+    }
+  };
+  xmlhttp.open("POST", "save_plans.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify(data));
+}
+
+
+
 </script>             
 
 </body>

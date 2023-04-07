@@ -150,20 +150,16 @@ session_start();
                   <h5 class="card-title">Planes de futuro</h5>
                   <form class="checkInfo" action="save_plans.php" method="POST">
                   <table id="plans">
-                    <thead>
-                      <tr>
-                        <th>Plan</th>
-                        <th>Realizado</th>
-                      </tr>
-                    </thead>
                     <tbody>
                       <?php include 'showplans.php'; ?>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td style="display: flex; justify-content: space-between;" colspan="2">
-                          <button class="btn btn-primary" style="width: 48%;" type="button" onclick="addPlan()">Agregar nuevo plan</button>
-                          <button class="btn btn-secondary" style="width: 48%;" type="submit" onclick="savePlans()">Guardar</button>
+                        <td style="display: d-inline; justify-content: space-between;" style="width: 48%;" colspan="2">
+                          <button class="btn btn-primary"  type="button" onclick="addPlan()">Agregar nuevo plan</button>
+                        </td>
+                      <td style="display: d-inline; justify-content: space-between;" style="width: 48%;" colspan="2">
+                          <button class="btn btn-secondary"  type="submit" onclick="savePlans()">Guardar planes</button>
                         </td>
                       </tr>
                     </tfoot>
@@ -337,21 +333,20 @@ session_start();
   let count = 1;
   document.querySelector("#plans tbody").innerHTML = "";
   var table = document.querySelector("#plans tbody");
+  var cell0 = document.createElement("th");
   var row = document.createElement("tr");
   var cell1 = document.createElement("td");
-  var cell2 = document.createElement("td");
+  var label = document.createElement("label");
   var input1 = document.createElement("input");
-  var input2 = document.createElement("input");
-  
+  label.innerHTML = "Introduzca su próximo plan:";
   input1.type = "text";
-  input1.name = "plan[]";
-  input2.type = "checkbox";
-  input2.name = "done[]";
-  
+  input1.name = "plan[]"; 
+  input1.classList.add("px-2");
+  cell0.appendChild(label);
   cell1.appendChild(input1);
-  cell2.appendChild(input2);
+  row.appendChild(cell0);
   row.appendChild(cell1);
-  row.appendChild(cell2);
+  
   
   table.appendChild(row);
 
@@ -360,24 +355,29 @@ session_start();
 
 function savePlans() {
 
-  var plans = document.getElementsByName("plan[]");
-  var done = document.getElementsByName("done[]");
-  var data = [];
-  for (var i = 0; i < plans.length; i++) {
-    var plan = plans[i].value;
-    var is_done = done[i].checked ? 1 : 0;
+var plans = document.getElementsByName("plan[]");
+var done = document.getElementsByName("done[]");
+var data = [];
+for (var i = 0; i < plans.length; i++) {
+  var plan = plans[i].value.trim();
+  var is_done = done[i].checked ? 1 : 0;
+  if (plan != "") {
     data.push({plan: plan, is_done: is_done});
+  } else {
+    alert("El campo de plan no puede estar en blanco.");
+    return false;
   }
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      alert("Los planes se han guardado correctamente.");
-    }
-  };
-  xmlhttp.open("POST", "save_plans.php", true);
-  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xmlhttp.send(JSON.stringify(data));
 }
+var xmlhttp = new XMLHttpRequest();
+/*xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+  }
+};*/
+xmlhttp.open("POST", "save_plans.php", true);
+xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+xmlhttp.send(JSON.stringify(data));
+}
+
 
 
 

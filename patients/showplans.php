@@ -23,12 +23,12 @@ $resultado = $conn->query($sql);
 // Mostrar los planes futuros
 if ($resultado->num_rows > 0) {
   echo "<table>";
-  echo "<thead><tr><th>Plan</th><th>Realizado</th></tr></thead>";
+  echo "<thead><tr><th>Plan</th><th class='px-5'>Realizado</th></tr></thead>";
   echo "<tbody>";
   while($fila = $resultado->fetch_assoc()) {
     echo "<tr>";
     echo "<td><input type='label' hidden name='plan[]' value='".$fila["plans_definition"]."'><label>".$fila["plans_definition"]."</label></td>";
-    echo "<td><input type='checkbox' name='done[]'></td>";
+    echo "<td class='px-5'><input type='checkbox' name='done[]' value='1'></td>";
     echo "</tr>";
   }
   echo "</tbody></table>";

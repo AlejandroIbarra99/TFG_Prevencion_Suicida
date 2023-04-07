@@ -16,11 +16,11 @@ if ($conn->connect_error) {
 // Obtener datos del formulario enviado desde el cliente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $plans = isset($_POST['plan']) ? $_POST['plan'] : array();
-    $is_done = isset($_POST['done'][$i]) && $_POST['done'][$i] == "on" ? 1 : 0;
+    $is_done = isset($_POST['done']) ? $_POST['done'] : array();
 
     $data = array();
 
-    // Validación y eliminación de planes duplicados
+    $i = 0; // inicializar la variable $i antes del ciclo
     foreach ($plans as $key => $plan) {
         $plan = trim($plan);
         // Comprobar si el plan ya existe en la base de datos
@@ -33,8 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // El plan no existe en la base de datos, guardarlo
             $is_done = isset($done[$key]) && $done[$key] ? 1 : 0;
             $data[] = array('plan' => $plan, 'is_done' => $is_done);
+        } else {
+            // El plan ya existe en la base de datos, actualizar su estado de realización
+            $stmt = $conn->prepare("UPDATE plans SET plans_done = ? WHERE plans_definition = ? AND patient_id = ?");
+            $is_done = isset($done[$key]) && $done[$key] ? 1 : 0;
+            $stmt->bind_param("isi", $is_done, $plan, $_SESSION['patient_id']);
+            $stmt->execute();
         }
         $stmt->close();
+        $i++; // incrementar la variable $i en cada iteración
     }
 
     // Guardar los planes que no existen en la base de datos
@@ -54,14 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Planes registrados correctamente. Redirigiendo...</h5></div>";
         echo "<script>
               setTimeout(function() {
-                window.location.href = './safezone.php';
-              }, 2000);
+                window.location.href = './safezone';
+              });
             </script>";
     } else {
         echo "<script>
               setTimeout(function() {
-                window.location.href = './safezone.php';
-              }, 100);
+                window.location.href = './safezone';
+              });
             </script>";
     }
 }

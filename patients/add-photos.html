@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Añadir Fotos</title>
+  <title>Mi zona segura</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" >
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+  
+
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+
 </head>
+
 
 <body>
 
@@ -46,39 +59,40 @@
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
+        <a class="nav-link" href="./safezone">
           <i class="bi bi-grid"></i>
           <span>Mi Espacio Seguro</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="contact-page.html">
+        <a class="nav-link collapsed" href="./index">
           <i class="bi bi-chat-square"></i>
           <span>Contacto</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li>
+      <!-- End Login Page Nav -->
 
+      <!--<li class="nav-heading">Pages</li>-->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
+     <!-- <li class="nav-item">
+        <a class="nav-link collapsed" href="">
           <i class="bi bi-card-list"></i>
           <span>Registro</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li>
+       End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link collapsed" href="../logout">
           <i class="bi bi-box-arrow-in-right"></i>
+
           <span>Cerrar Sesión</span>
         </a>
-      </li><!-- End Login Page Nav -->
-
+      </li>
+      <!-- End Login Page Nav -->
     </ul>
-
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -87,7 +101,7 @@
       <h1>Añadir Fotos</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Mi Espacio Seguro</a></li>
+          <li class="breadcrumb-item"><a href="./safezone">Mi Espacio Seguro</a></li>
           <li class="breadcrumb-item active">Nueva Foto</li>
         </ol>
       </nav>
@@ -100,20 +114,23 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Insertar la foto que desees</h5>
+              <form action="./save_photos.php" method="POST" enctype="multipart/form-data">
               <table id="tablecontact">
                 <tr>
                   <td>
-                    <p><input type="file" id="AddNewImage" accept="image/*"  onchange="document.getElementById('NewImage').src = window.URL.createObjectURL(files[0])" />
+                    <p><input type="file" name="NewImage" accept="image/*" onchange="document.getElementById('NewImagePreview').src = window.URL.createObjectURL(this.files[0])" />
                   </p>
                     </td>
                 </tr>
                 <tr>
-                  <td ><img class="imagenes" id="NewImage" alt="Introduzca su imagen" /></td>
+                  <td ><img class="imagenes" id="NewImagePreview"  name="NewImagePreview" alt="Introduzca su imagen" /></td>
                 </tr>
               </table>
+           
               <br>
-              <button id="btnSaveContact" onclick="getpath()" class="btn btn-primary me-md-2">Añadir Foto</button>
+              <button id="btnSavePhoto" type="submit" class="btn btn-primary me-md-2">Añadir Foto</button>
             </div>
+           </form>
           </div>
 
         </div>

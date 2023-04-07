@@ -1,7 +1,8 @@
 function openNewContact() {
-  window.location.href ='./new-contact.html', 'Nuevo Contacto';
+  window.location.href ='./new-contact', 'Nuevo Contacto';
 }
 document.getElementById('btnOpenNewContact').addEventListener('click', openNewContact);
+
 
 
 

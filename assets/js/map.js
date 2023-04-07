@@ -1,15 +1,12 @@
 var leftPos = screen.width - 400;
 var topPos = screen.width - 200;
 function chat(){
-    window.open('./chat_app.html', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
+    window.open('./chat_app', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
 }
 function nuevopaciente() {
-    window.location.href = '../register/patient-register.php';
+    window.location.href = '../register/patient-register';
 }
 
-function photo(){
-    window.open('./add-photos.html', 'Nuevo Contacto', '_blank, height=594, width=795');
-}
 
 const boton = document.querySelector("#createaccount");
 boton.addEventListener("click", createaccount)
@@ -21,15 +18,13 @@ boton.addEventListener("click", createaccount)
 const botonMES = document.querySelector("#botonMES");
 boton.addEventListener("click", createaccount)
 
-function loginpage(){
-    window.open('./pages-login.html', "_self");
-}
+
 
 const botonOpen = document.querySelector("#buttonLogin");
 boton.addEventListener("click", createaccount)
 
 function MainPage(){
-    window.open('./index.html', "_self");
+    window.open('./index', "_self");
 }
 
 const btnCita = document.querySelector("#btnCita");

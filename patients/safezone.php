@@ -75,19 +75,19 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="contact-page.html">
+        <a class="nav-link collapsed" href="../index">
           <i class="bi bi-chat-square"></i>
           <span>Contacto</span>
         </a>
       </li><!-- End Login Page Nav -->
 
 
-      <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="register/psyco-register.php">
           <i class="bi bi-card-list"></i>
           <span>Registro</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li> End Register Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="../logout.php">
@@ -265,20 +265,15 @@ session_start();
           <!-- Imagenes -->
           <div class="card">
             <div class="filter">
-              <button class="btnNewContact" src="assets/img/anadirimagen.png"onclick="photo()"><i class="bi bi-plus-circle"></i></button>
+              <button class="btnNewContact" src="assets/img/anadirimagen.png" type="button" onclick="photo()"><i class="bi bi-plus-circle"></i></button>
             </div>
 
             <div class="card-body">
               <h5 class="card-title">Mis Fotos</h5>
 
               <div id="budgetChart" style="min-height: 400px;" class="echart">
-              <div><img src="assets/img/dog.png"></div>
-              <br>
-              <div><img src="assets/img/Sunset.png"></div>
-              <br>
-              <div><img src="assets/img/Camping.png"></div>
-              <br>
-              <div><img src="../assets/img/Friends.png"></div>
+              <?php require 'showphotos.php'; ?>
+              
               <div id="photobox">
 
               </div>
@@ -320,7 +315,7 @@ session_start();
   <script>function showDiary(id) {
     // Realiza una solicitud AJAX para obtener la información de la 'safe zone' del paciente seleccionado
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "daily.php?id=" + id, true);
+    xhr.open("GET", "daily?id=" + id, true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         document.getElementById("dailyentries").innerHTML = xhr.responseText;
@@ -352,7 +347,7 @@ session_start();
 
 }
 
-
+/*
 function savePlans() {
 
 var plans = document.getElementsByName("plan[]");
@@ -369,13 +364,16 @@ for (var i = 0; i < plans.length; i++) {
   }
 }
 var xmlhttp = new XMLHttpRequest();
-/*xmlhttp.onreadystatechange = function() {
+xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
   }
-};*/
-xmlhttp.open("POST", "save_plans.php", true);
+};
+xmlhttp.open("POST", "save_plans", true);
 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 xmlhttp.send(JSON.stringify(data));
+}*/
+function photo(){
+    window.location.href = './add-photos';
 }
 
 

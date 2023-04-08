@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['patient_id'] = $row['id'];  
         setUserCookie($row['id'], 'patient', $row['id']);
 
-        header("Location: ../patients/safezone.php");
+        header("Location: ../patients/safezone");
     } elseif ($result_psychologist->num_rows > 0) {
         $row = $result_psychologist->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
@@ -57,11 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $registration_number = $row['registration_number'];  
         setUserCookie($row['id'], 'psychologist', $row['registration_number']);
 
-        header("Location: ../psychos/patients.php");
+        header("Location: ../psychos/patients");
     } else {
         // Si no se encuentra al usuario, muestra un mensaje de error
         $_SESSION['error_message'] = "Nombre de usuario o contraseña incorrectos";
-        header("Location: pages-login.php");
+        header("Location: pages-login");
     }
 }
 

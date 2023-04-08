@@ -1,5 +1,4 @@
 <?php
-
 // Conectamos con la base de datos
 $servername = "localhost";
 $username = "sa";
@@ -14,7 +13,9 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['id'])) {
-    $id = $_SESSION['pacient_id'];
+    if (isset($_SESSION['patient_id'])) {
+        $id = $_SESSION['patient_id'];
+    }
 
     // Realiza la consulta SQL para obtener las entradas del diario del paciente seleccionado
     $sql = "SELECT daily_date, daily_entry FROM dailys WHERE patient_id = '$id' group by daily_date ORDER BY daily_date DESC";
@@ -22,8 +23,8 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         echo "<textarea readonly id='readtext' name='readtext' rows='10' cols='50'>";
         while ($row = $result->fetch_assoc()) {
-            echo "<p>{$row['daily_date']}</p>
-                  <p>{$row['daily_entry']}</p>";
+            echo "{$row['daily_date']}
+                  {$row['daily_entry']}";
         }
         echo "</textarea>";
     } else {

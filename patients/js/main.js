@@ -6,7 +6,7 @@ document.getElementById('btnOpenNewContact').addEventListener('click', openNewCo
 
 
 
-
+/*
 const btnSaveDiary = document.querySelector("#btnSaveDiary");
 
 btnSaveDiary.addEventListener("click", () => {
@@ -25,12 +25,12 @@ btnSaveDiary.addEventListener("click", () => {
       console.error("Error:", error);
     });
 });
-
+*/
 const btnShowDiary = document.querySelector("#btnShowDiary");
 
 // Agregar un evento de clic al botón "Ver diario"
 btnShowDiary.addEventListener("click", () => {
-  fetch("./daily.php")
+  fetch("./showdaily.php")
     .then((response) => response.json())
     .then((data) => {
       const diaryEntries = document.querySelector("#dailyentries");

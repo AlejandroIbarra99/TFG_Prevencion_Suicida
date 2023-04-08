@@ -179,20 +179,24 @@ session_start();
                 </div>-->
 
                 <div class="card-body auto-size">
+                <form class="checkInfo" action="save_daily.php" method="POST">
                   <h5 class="card-title">Mi diario</h5>
                   <div style="display: flex; justify-content: space-between;">
                     <textarea id="dailytext" name="dailytext" rows="10" cols="50"></textarea>
                     <div id="dailyentries">
                     <?php
-                        include './daily.php';
+
+                        include './showdaily.php';
                       ?>
                     </div>
                   </div>
                   <br>
                   <div style="display: flex; justify-content: space-between;">
-                    <button id="btnSaveDiary" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
-                    <button id="btnShowDiary" class="btn btn-secondary" style="width: 48%;" onclick="showDaily(<?php $_SESSION['user_id'] ?>)">Ver diario</button>
+                    <button id="btnSaveDiary" type="submit" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
+                  </form>
+                    <button id="btnShowDiary" class="btn btn-secondary" type="button" style="width: 48%;" onclick="showDiary()">Ver diario</button>
                   </div>  
+                
                 </div>
 
               </div>
@@ -312,12 +316,13 @@ session_start();
   
   <script src="../assets/js/calendar.js"></script>-->
   <script defer src="js/main.js"></script>  
-  <script>function showDiary(id) {
+  <script>function showDiary() {
     // Realiza una solicitud AJAX para obtener la información de la 'safe zone' del paciente seleccionado
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "daily?id=" + id, true);
+    xhr.open("GET", "./showdaily", true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log("entra al show");
         document.getElementById("dailyentries").innerHTML = xhr.responseText;
       }
     };

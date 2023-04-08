@@ -27,14 +27,26 @@ $stmt->bind_param("ss", $entrada, $patientid);
 $patientid = $_SESSION["patient_id"];
 
 // Establecemos los parámetros y ejecutamos la consulta
-if (isset($_POST['diaryEntry'])) {
-    $entrada = $_POST['diaryEntry'];
+if (isset($_POST['dailytext'])) {
+    $entrada = $_POST['dailytext'];
     $stmt->execute();
-    echo json_encode(array("message" => "Entrada guardada exitosamente"));
-} else {
-    echo json_encode(array("message" => "Error al guardar la entrada"));
-}
+    if ($stmt->affected_rows > 0) {
+        echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Entrada registrada correctamente. Redirigiendo...</h5></div>";
+        echo "<script>
+              setTimeout(function() {
+                window.location.href = './safezone';
+              }, 1000);
+            </script>";
+    } else {
+        echo "Error al guardar la entrada: " . $conn->error;
+        echo "<script>
+        setTimeout(function() {
+          window.location.href = './safezone';
+        }, 2000);
+      </script>";
+    }
 
+}
 // Cerramos la conexión
 $stmt->close();
 $conn->close();

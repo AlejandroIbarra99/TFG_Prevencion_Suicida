@@ -31,12 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->num_rows == 0) {
             // El plan no existe en la base de datos, guardarlo
-            $is_done = isset($done[$key]) && $done[$key] ? 1 : 0;
+            $is_done = isset($is_done[$key]) && $is_done[$key] == "1" ? 1 : 0;
             $data[] = array('plan' => $plan, 'is_done' => $is_done);
         } else {
             // El plan ya existe en la base de datos, actualizar su estado de realización
             $stmt = $conn->prepare("UPDATE plans SET plans_done = ? WHERE plans_definition = ? AND patient_id = ?");
-            $is_done = isset($done[$key]) && $done[$key] == "1" ? 1 : 0;
+            $is_done = isset($_POST['done'][$key]) && $_POST['done'][$key] == "1" ? 1 : 0;
             $stmt->bind_param("isi", $is_done, $plan, $_SESSION['patient_id']);
             $stmt->execute();
         }

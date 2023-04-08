@@ -28,7 +28,7 @@ if ($resultado->num_rows > 0) {
   while($fila = $resultado->fetch_assoc()) {
     echo "<tr>";
     echo "<td><input type='label' hidden name='plan[]' value='".$fila["plans_definition"]."'><label>".$fila["plans_definition"]."</label></td>";
-    echo "<td class='px-5'><input type='checkbox' name='done[]' value='1'></td>";
+    echo "<td class='px-5'><input type='checkbox' name='done' value='1'></td>";
     echo "</tr>";
   }
   echo "</tbody></table>";

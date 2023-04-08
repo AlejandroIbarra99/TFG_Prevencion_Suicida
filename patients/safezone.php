@@ -192,9 +192,9 @@ session_start();
                   </div>
                   <br>
                   <div style="display: flex; justify-content: space-between;">
-                    <button id="btnSaveDiary" type="submit" class="btn btn-primary" style="width: 48%;">Guardar entrada</button>
+                    <button id="btnSaveDiary" type="submit" class="btn btn-primary" style="width: 100%;">Guardar entrada</button>
                   </form>
-                    <button id="btnShowDiary" class="btn btn-secondary" type="button" style="width: 48%;" onclick="showDiary()">Ver diario</button>
+                    <!--<button id="btnShowDiary" class="btn btn-secondary" type="button" style="width: 48%;" onclick="showDiary()">Ver diario</button>-->
                   </div>  
                 
                 </div>
@@ -327,6 +327,7 @@ session_start();
       }
     };
     xhr.send();
+    
   }
 
   function addPlan() {

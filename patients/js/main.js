@@ -30,7 +30,7 @@ const btnShowDiary = document.querySelector("#btnShowDiary");
 
 // Agregar un evento de clic al botón "Ver diario"
 btnShowDiary.addEventListener("click", () => {
-  fetch("./showdaily.php")
+  fetch("./showdaily")
     .then((response) => response.json())
     .then((data) => {
       const diaryEntries = document.querySelector("#dailyentries");

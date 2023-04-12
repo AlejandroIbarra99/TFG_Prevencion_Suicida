@@ -210,33 +210,40 @@ session_start();
                   <form autocomplete="on">
                     <div class="card-header bg-dark">
                       <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
-                        <input type="text" class="datepicker" placeholder="Seleccione un día" readonly value="24-10-2022"><span class="fa fa-calendar"></span>
+                        <input type="date" class="datepicker" placeholder="Seleccione un día"><span class="fa fa-calendar"></span>
                       </div>
                     </div>
                     <div class="card-body p-3 p-sm-5">
                       <div class="row text-center mx-0">
-                        <span>Mañana</span>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-danger" disabled onclick="pickhourdate()">8:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">8:30</button></div></div>
+                        <span><b>Mañana</b></span>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-danger" onclick="pickhourdate()">8:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">8:30</button></div></div>
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-danger" disabled>9:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">9:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">10:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">9:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">10:00</button></div></div>
                       </div>
                       <div class="row text-center mx-0">
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">10:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">10:30</button></div></div>
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-danger" disabled>11:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">11:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">12:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">12:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">11:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">12:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">12:30</button></div></div>
                       </div>
 
                       <div class="row text-center mx-0">
-                        <span>Tarde</span>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">16:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">17:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">18:00</button></div></div>
+                        <span><b>Tarde</b></span>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">13:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">13:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">16:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">16:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">17:00</button></div></div>
+                      </div>
+                      <div class="row text-center mx-0">
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">17:30</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">18:00</button></div></div>
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">18:30</button></div></div>
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-danger" disabled>19:00</button></div></div>                        
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-light">20:00</button></div></div>                        
+                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success">19:30</button></div></div>                        
                       </div>
                     </div>
                   </form>

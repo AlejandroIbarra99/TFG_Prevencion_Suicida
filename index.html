@@ -237,7 +237,25 @@
     <!-- Template Main JS File -->
     <script>function loginpage(){
       window.open('./login/pages-login', "_self");
-  }</script>
+  }
+  if ("geolocation" in navigator) {
+        // el navegador admite geolocalización
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // posición actual del usuario
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+
+          // muestra la ubicación del usuario en el mapa
+          var mapUrl = "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d12578.876531018896!2d" + lng + "!3d" + lat + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spsicologo%20clinica!5e0!3m2!1ses!2ses!4v1666447893411!5m2!1ses!2ses";
+          document.getElementById("map").src = mapUrl;
+        });
+      } else {
+        // geolocalización no soportada
+        alert("Geolocalización no soportada por este navegador.");
+      }
+  
+  
+  </script>
     <script src="assets/js/map.js"></script>
 
   </body>

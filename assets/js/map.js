@@ -1,7 +1,10 @@
 var leftPos = screen.width - 400;
 var topPos = screen.width - 200;
 function chat(){
-    window.open('./chat_app', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
+    window.location.href = './chats/chats', 'Chats';
+}
+function chat_online(){
+    window.open('./chats/chat_online', 'Chat de ayuda', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
 }
 function nuevopaciente() {
     window.location.href = '../register/patient-register';

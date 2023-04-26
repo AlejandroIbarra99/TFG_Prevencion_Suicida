@@ -210,12 +210,14 @@ session_start();
                   <form autocomplete="on">
                     <div class="card-header bg-dark">
                       <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
-                        <input id="date" name="date" type="date" class="datepicker" placeholder="Seleccione un día" value="Hoy" required><span class="fa fa-calendar"></span>
+                        <input id="date" name="date" type="date" class="datepicker" placeholder="Seleccione un día" required><span class="fa fa-calendar"></span>
                       </div>
                     </div>
                     <div class="card-body p-3 p-sm-5">
                       <div class="row text-center mx-0">
                         <span><b>Mañana</b></span>
+
+
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">8:00</button></div></div>
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">8:30</button></div></div>
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">9:00</button></div></div>
@@ -375,9 +377,9 @@ function pickhourdate() {
         alert("Hora " + hora + " del día " + dia + " reservada correctamente.");
         
         // Cambiar la clase del botón seleccionado
-        var botonSeleccionado = event.target;
+        var botonSeleccionado = hora;
         botonSeleccionado.classList.replace("btn btn-success", "btn btn-danger");
-        event.target.disabled = true;
+        botonSeleccionado.target.disabled = true;
       }
     };
     xmlhttp.open("GET", "save_hour.php?hora=" + hora + "&dia=" + dia, true);

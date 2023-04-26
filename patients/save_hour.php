@@ -42,7 +42,7 @@ $psyco = $_SESSION["register_number"];
         echo "<script>
               setTimeout(function() {
                 window.location.href = './safezone';
-              }, 10);
+              }, 1000);
             </script>";
     } else {
         echo "Error al guardar la cita: " . $conn->error;

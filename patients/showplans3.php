@@ -29,7 +29,13 @@ if ($resultado->num_rows > 0) {
     $cont++;
     echo "<tr>";
     echo "<td><input type='label' hidden name='plan[]".$cont."' value='".$fila["plans_definition"]."'><label>".$fila["plans_definition"]."</label></td>";
-    echo "<td class='px-5'><input type='checkbox' name='done' value='".$fila["id"]."'></td>";
+    echo "<td class='px-5'>";
+    if (array_key_exists("done", $fila) && $fila["done"] == 1) {
+        echo "<input type='checkbox' name='done".$cont."' value='".$fila["id"]."' checked>";
+    } else {
+        echo "<input type='checkbox' name='done".$cont."' value='".$fila["id"]."'>";
+    }
+    echo "</td>";
     echo "</tr>";
   }
   echo "</tbody></table>";

@@ -159,7 +159,7 @@ session_start();
                           <button class="btn btn-primary"  type="button" onclick="addPlan()">Agregar nuevo plan</button>
                         </td>
                       <td style="display: d-inline; justify-content: space-between;" style="width: 48%;" colspan="2">
-                          <button class="btn btn-secondary"  type="submit" onclick="savePlans()">Guardar planes</button>
+                          <button class="btn btn-secondary"  type="submit">Guardar planes</button>
                         </td>
                       </tr>
                     </tfoot>

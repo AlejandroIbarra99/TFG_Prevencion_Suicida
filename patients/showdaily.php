@@ -20,7 +20,7 @@ if (isset($_SESSION['patient_id'])) {
             FROM dailys 
             WHERE patient_id = '$id' 
             GROUP BY DATE_FORMAT(daily_date, '%d/%m/%Y') 
-            ORDER BY daily_date ASC";
+            ORDER BY daily_date DESC";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {

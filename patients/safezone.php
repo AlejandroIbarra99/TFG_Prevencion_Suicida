@@ -207,7 +207,7 @@ session_start();
               <div class="card top-selling overflow-auto">
                 <div class="card-body pb-0">
                   <h5 class="card-title">Consultas</h5>
-                  <form autocomplete="on">
+                  <!--<form autocomplete="on">
                     <div class="card-header bg-dark">
                       <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
                         <input id="date" name="date" type="date" class="datepicker" placeholder="Seleccione un día" required><span class="fa fa-calendar"></span>
@@ -248,7 +248,83 @@ session_start();
                         <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">19:30</button></div></div>                        
                       </div>
                     </div>
-                  </form>
+                    </form>--->
+                    <?php
+                      // Conectar a la base de datos y seleccionar la tabla de horas
+                      $servername = "localhost";
+                      $username = "sa";
+                      $password = "1234";
+                      $dbname = "contigo";
+                      $conn = new mysqli($servername, $username, $password, $dbname);
+
+                      // Comprobamos la conexión
+                      if ($conn->connect_error) {
+                        die("Conexión fallida: " . $conn->connect_error);
+                      }
+
+                      $horas = mysqli_query($conn, "SELECT * FROM hours");
+
+                      // Seleccionar las citas para el día seleccionado
+                      if (isset($_POST['schedule_date'])) {
+                        $dia = $_POST['schedule_date'];
+                      $citas = mysqli_query($conn, "SELECT * FROM schedule WHERE schedule_date = '$dia'");
+                      }
+                      else{
+                        $dia = 'CURDATE()';
+                        $citas = mysqli_query($conn, "SELECT * FROM schedule WHERE schedule_date = CURDATE()");
+                      }
+
+                      // Crear un arreglo para almacenar las horas disponibles
+                      $disponibles = array();
+
+                      // Iterar a través de las horas y determinar si están disponibles
+                      while ($hora = mysqli_fetch_array($horas)) {
+                        $disponible = true;
+                        mysqli_data_seek($citas, 0);
+                        while ($cita = mysqli_fetch_array($citas)) {
+                          if ($hora['hour'] == $cita['schedule_time']) {
+                            $disponible = false;
+                            break;
+                          }
+                        }
+                        if ($disponible) {
+                          $disponibles[] = $hora['hour'];
+                        }
+                      }
+
+                      // Mostrar el formulario HTML
+                      echo "<form>";
+                      echo "<input hidden type='text' name='paciente' value='" . $_SESSION['patient_id'] . "'>";
+                      echo "<div class='card-header bg-dark'>";
+                      echo "<div class='mx-0 mb-0 row justify-content-sm-center justify-content-start px-1'>";
+                      echo "<input type='date' id='schedule_date' name='schedule_date' value='$dia' class='datepicker'>";
+                      echo "</div></div>";
+                      echo "<div class='card-body p-3 p-sm-5'>";
+                      echo "<div class='row text-center mx-0'>"; 
+                      foreach ($disponibles as $hora) {
+                       // echo "<div class='col-md-2 col-4 my-1 px-2'><div class='cell py-1'><option value='$hora' class='btn btn-success'>$hora</option></div></div>";
+                      }
+                      mysqli_data_seek($horas, 0);
+                      while ($hora = mysqli_fetch_array($horas)) {
+                        $ocupada = false;
+                        mysqli_data_seek($citas, 0);
+                        while ($cita = mysqli_fetch_array($citas)) {
+                          if ($hora['hour'] == $cita['schedule_time']) {
+                            $ocupada = true;
+                            break;
+                          }
+                        }
+                        if (!$ocupada) {
+                          echo "<div class='col-md-2 col-4 my-1 px-2'><div class='cell py-1'><button type='submit' name='hour' value='$hora[hour]' class='btn btn-success'>$hora[hour]</button></div></div>";
+                        } else {
+                          echo "<div class='col-md-2 col-4 my-1 px-2'><div class='cell py-1'><button type='button' disabled class='btn btn-danger'>$hora[hour] (ocupada)</button></div></div>";
+                        }
+                      }
+                      echo "</div></DIV>";
+                      echo "<input class='btn btn-primary' type='submit' value='Pedir cita'>";
+                      echo "</form>";
+                    ?> 
+
                   </div>
               </div>
             </div><!-- End  -->

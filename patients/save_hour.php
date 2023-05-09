@@ -1,43 +1,23 @@
 <?php
-session_start();
-
-// Comprobamos si el usuario ha iniciado sesión
-if (!isset($_SESSION["user_id"])) {
-    die("No ha iniciado sesión.");
-}
-// Comprobamos si se han recibido los datos necesarios
-if (!isset($_GET["hora"]) || !isset($_GET["dia"])) {
-    die("Faltan datos.");
-}
-// Conectamos con la base de datos
+// Conectar a la base de datos y seleccionar la tabla de citas
 $servername = "localhost";
 $username = "sa";
 $password = "1234";
 $dbname = "contigo";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Comprobamos la conexión
+// Comprobar la conexión
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+  die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Preparamos y vinculamos los parámetros
-$stmt = $conn->prepare("INSERT INTO schedule (schedule_date, schedule_time, patient_id, psychologist_registration_number) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssis", $hora, $dia, $patientid, $psyco);
+// Obtener la hora y el día seleccionado desde el formulario enviado
+$hora = $_POST['hour'];
+$dia = $_POST['schedule_date'];
 
-$hora = $_GET["hora"];
-$dia = $_GET["dia"];
-?>
-<script>alert(<?php $dia . " " . $hora?>)</script>
-<?php
-// Obtenemos el ID del paciente de la sesión del usuario
-$patientid = $_SESSION["patient_id"];
-$psyco = $_SESSION["register_number"];
-
-// Establecemos los parámetros y ejecutamos la consulta
-    $stmt->execute();
-    if ($stmt->affected_rows > 0) {
+// Insertar la cita en la base de datos
+$sql = "INSERT INTO schedule (patient_id, schedule_date, schedule_time) VALUES ('{$_SESSION['patient_id']}', '$dia', '$hora')";
+if ($conn->query($sql) === TRUE) {
         echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Cita registrada correctamente. Redirigiendo...</h5></div>";
         echo "<script>
               setTimeout(function() {

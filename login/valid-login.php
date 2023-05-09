@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si encontramos al usuario en alguna de las tablas, iniciamos sesión
     if ($result_patient->num_rows > 0) {
         $row = $result_patient->fetch_assoc();
-        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['register_number'] = $row['psychologist_registration_number'];
         $_SESSION['user_type'] = 'patient';
         $_SESSION['patient_id'] = $row['id'];  
         setUserCookie($row['id'], 'patient', $row['id']);

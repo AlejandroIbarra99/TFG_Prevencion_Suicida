@@ -324,7 +324,7 @@ session_start();
                     echo "<input hidden type='text' name='paciente' value='" . $_SESSION['patient_id'] . "'>";
                     echo "<div class='card-header bg-dark'>";
                     echo "<div class='mx-0 mb-0 row justify-content-sm-center justify-content-start px-1'>";
-                    echo "<input type='date' id='schedule_date' name='schedule_date' value='$dia' class='datepicker'>";
+                    echo "<input type='date' id='schedule_date' name='schedule_date' value='$dia' class='datepicker' onchange='updateSchedule()'>";
                     echo "</div></div>";
                     echo "<div class='card-body p-3 p-sm-5'>";
                     echo "<div class='row text-center mx-0'>"; 
@@ -350,11 +350,11 @@ session_start();
                       $paciente = $_SESSION['patient_id'];
                       $fecha_seleccionada = $_POST['schedule_date'];
                       $sql = "INSERT INTO schedule (schedule_date, schedule_time, patient_id) VALUES ('$fecha_seleccionada', '$hora_seleccionada', '$paciente')";
-                      if ($conn->query($sql) === TRUE) {
+                      /*if ($conn->query($sql) === TRUE) {
                       echo "<div class='alert alert-success' role='alert'>Cita guardada exitosamente</div>";
                       } else {
                       echo "<div class='alert alert-danger' role='alert'>Error al guardar la cita: " . $conn->error . "</div>";
-                      }
+                      }*/
                       }
                     
                       
@@ -363,15 +363,39 @@ session_start();
                       
                       echo "</div></DIV>";
                       echo "</form>";
-                      
+                      echo "<script>
+                      function updateSchedule() {
+                        var date = document.getElementById('schedule_date').value;
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById('schedule-container').innerHTML = this.responseText;
+                          }
+                        };
+                        xhttp.open('POST', 'safezone', true);
+                        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhttp.send('ajax=true&schedule_date=' + date);
+                        header('Location: safezone');
+                      }
+                      const scheduleDateInput = document.getElementById('schedule_date');
+
+                      scheduleDateInput.addEventListener('change', function() {
+                        // código a ejecutar cuando cambia la fecha seleccionada
+                        updateSchedule();
+                      })
+                      </script>";
                       ?>
                   </div>
               </div>
-            </div><!-- End  -->
+            </div>
+            <!-- End  -->
+
             <div class="col-12">
               <div class="card top-selling overflow-auto">
                 <div class="card-body pb-0">
                   <h5 class="card-title">Próximas citas</h5>
+                    <div id="next_schedule" class="mt-4">
+                    </div>
                   </div>
               </div>
             </div>
@@ -446,6 +470,27 @@ session_start();
   
   <script src="../assets/js/calendar.js"></script>-->
   <script defer src="js/main.js"></script>  
+  <script>function showNextSchedule() {
+    // Realiza una solicitud AJAX para obtener la información de las citas del paciente seleccionado
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "get_next_schedule.php", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        document.getElementById("next_schedule").innerHTML = xhr.responseText;
+      }
+    };
+    xhr.send();
+  }
+    // Llama a la función showNextSchedule() después de que se haya cargado la página
+    window.addEventListener("load", function() {
+    showNextSchedule();
+  });
+  function deleteHour(patient_id) {
+    if (confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
+      // Llamar al archivo PHP para eliminar la cita
+      window.location.href = "delete_patient.php?patient_id=" + patient_id;
+    }
+  }</script>
   <script>function showDiary() {
     // Realiza una solicitud AJAX para obtener la información de la 'safe zone' del paciente seleccionado
     const xhr = new XMLHttpRequest();

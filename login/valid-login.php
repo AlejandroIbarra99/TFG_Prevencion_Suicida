@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['register_number'] = $row['psychologist_registration_number'];
         $_SESSION['user_type'] = 'patient';
         $_SESSION['patient_id'] = $row['id'];  
-        setUserCookie($row['id'], 'patient', $row['id']);
+        setUserCookie($row['id'], 'patient',$row['name'],  $row['id']);
 
         header("Location: ../patients/safezone");
     } elseif ($result_psychologist->num_rows > 0) {
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['psy_registration_number'] = $row['registration_number'];
         $_SESSION['register_number'] = $row['registration_number'];
         $registration_number = $row['registration_number'];  
-        setUserCookie($row['id'], 'psychologist', $row['registration_number']);
+        setUserCookie($row['id'], 'psychologist',$row['name'], $row['registration_number']);
 
         header("Location: ../psychos/patients");
     } else {
@@ -68,12 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerramos la conexión
 $conn->close();
 
-function setUserCookie($userId, $userType, $registration_number) {
+function setUserCookie($userId, $userType, $userName,$registration_number) {
     // Establece un tiempo de expiración para la cookie (por ejemplo, 30 días)
     $cookieExpiration = time() + (30 * 24 * 60 * 60);
 
     setcookie("user_id", $userId, $cookieExpiration, "/");
     setcookie("user_type", $userType, $cookieExpiration, "/");
+    setcookie("username", $userName, $cookieExpiration, "/");
     if($userType == 'psychologist')
     {
         setcookie("register_number", $registration_number, $cookieExpiration, "/");   

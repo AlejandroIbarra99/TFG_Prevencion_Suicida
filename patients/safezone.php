@@ -59,7 +59,17 @@ session_start();
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
     <div class="ms-auto" style="margin-right: 150px;">
-      <b><i class="bi bi-heart-fill"></i>&nbsp;&nbsp; Paciente</b>
+      <b><i class="bi bi-heart-fill"></i>&nbsp;&nbsp; 
+        <?php
+        if (isset($_COOKIE['username'])) {
+          echo $_COOKIE['username'];
+        }
+        else
+        {
+          echo "Paciente";
+        }
+        ?>
+      </b>
     </div>
   </header><!-- End Header -->
 

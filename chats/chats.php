@@ -131,7 +131,7 @@
     var leftPos = screen.width - 400;
     var topPos = screen.width - 200;
     function abrirchat(){
-        window.open('./chats/chat_app', 'Estamos CONTIGO', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
+        window.open('./chat_app', 'Estamos CONTIGO', '_blank, height=500, width=400, top=0, left='+ leftPos+',top=' + topPos);
     }
   </script>
 

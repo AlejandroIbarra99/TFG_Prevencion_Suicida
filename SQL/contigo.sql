@@ -1,25 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 19-04-2023 a las 12:59:48
--- Versión del servidor: 10.4.25-MariaDB
--- Versión de PHP: 8.1.10
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `contigo`
---
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
+  `message` text COLLATE utf8_spanish_ci NOT NULL,
+  `patient_id` int(11) DEFAULT NULL,
+  `psychologist_registration_number` varchar(10) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `timestamp` datetime DEFAULT current_timestamp(),
+  `shown` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -46,6 +32,17 @@ CREATE TABLE `dailys` (
   `daily_entry` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `patient_id` int(11) DEFAULT NULL,
   `daily_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hours`
+--
+
+CREATE TABLE `hours` (
+  `id` int(11) NOT NULL,
+  `hour` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -127,15 +124,23 @@ CREATE TABLE `psychologists` (
 
 CREATE TABLE `schedule` (
   `id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `time` time NOT NULL,
+  `schedule_date` date NOT NULL,
+  `schedule_time` time NOT NULL,
   `patient_id` int(11) NOT NULL,
-  `psychologist_registration_number` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `psychologist_registration_number` varchar(10) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_PatientChat` (`patient_id`),
+  ADD KEY `FK_PsychologistChat` (`psychologist_registration_number`);
 
 --
 -- Indices de la tabla `contacts`
@@ -150,6 +155,12 @@ ALTER TABLE `contacts`
 ALTER TABLE `dailys`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_PatientDaily` (`patient_id`);
+
+--
+-- Indices de la tabla `hours`
+--
+ALTER TABLE `hours`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `messages`
@@ -197,13 +208,19 @@ ALTER TABLE `psychologists`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `date` (`date`,`time`,`patient_id`,`psychologist_registration_number`),
+  ADD UNIQUE KEY `date` (`schedule_date`,`schedule_time`,`patient_id`,`psychologist_registration_number`),
   ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `psychologist_registration_number` (`psychologist_registration_number`);
+  ADD KEY `schedule_ibfk_2` (`psychologist_registration_number`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `contacts`
@@ -215,6 +232,12 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT de la tabla `dailys`
 --
 ALTER TABLE `dailys`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `hours`
+--
+ALTER TABLE `hours`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -256,6 +279,13 @@ ALTER TABLE `schedule`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `FK_PatientChat` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`),
+  ADD CONSTRAINT `FK_PsychologistChat` FOREIGN KEY (`psychologist_registration_number`) REFERENCES `psychologists` (`registration_number`);
 
 --
 -- Filtros para la tabla `contacts`
@@ -300,8 +330,4 @@ ALTER TABLE `plans`
 ALTER TABLE `schedule`
   ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`),
   ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`psychologist_registration_number`) REFERENCES `psychologists` (`registration_number`);
-COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Foto añadida correctamente. Redirigiendo...</h5></div>";
         echo "<script>
               setTimeout(function() {
-                window.location.href = './safezone.php';
+                window.location.href = './safezone';
               }, 1000);
             </script>";
     } else {

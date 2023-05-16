@@ -214,53 +214,11 @@ session_start();
               <div class="card top-selling overflow-auto">
                 <div class="card-body pb-0">
                   <h5 class="card-title">Consultas</h5>
-                  <!--<form autocomplete="on">
-                    <div class="card-header bg-dark">
-                      <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
-                        <input id="date" name="date" type="date" class="datepicker" placeholder="Seleccione un día" required><span class="fa fa-calendar"></span>
-                      </div>
-                    </div>
-                    <div class="card-body p-3 p-sm-5">
-                      <div class="row text-center mx-0">
-                        <span><b>Mañana</b></span>
-
-
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">8:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">8:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">9:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">9:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">10:00</button></div></div>
-                      </div>
-                      <div class="row text-center mx-0">
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">10:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">11:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">11:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">12:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">12:30</button></div></div>
-                      </div>
-
-                      <div class="row text-center mx-0">
-                        <span><b>Tarde</b></span>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">13:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">13:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">16:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">16:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">17:00</button></div></div>
-                      </div>
-                      <div class="row text-center mx-0">
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">17:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">18:00</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">18:30</button></div></div>
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">19:00</button></div></div>                        
-                        <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1"><button class="btn btn-success" onclick="pickhourdate()">19:30</button></div></div>                        
-                      </div>
-                    </div>
-                    </form>--->
                     <?php
-                    // Conectar a la base de datos y seleccionar la tabla de horas
-                    require '../dbaccess.php';
-
-                    
+                    function selecthours()
+                    {
+                      require '../dbaccess.php';
+                      // Conectar a la base de datos y seleccionar la tabla de horas
                     $horas = mysqli_query($conn, "SELECT * FROM hours");
                     
                     // Seleccionar las citas para el día seleccionado
@@ -293,7 +251,7 @@ session_start();
                     // Procesar el formulario si se ha seleccionado una hora
                     if (isset($_POST['hour'])) {
                       $hora = $_POST['hour'];
-                      $paciente = $_POST['paciente'];
+                      $paciente = $_SESSION['patient_id'];
                       $psyco = $_SESSION['register_number'];
                       $sql = "SELECT * FROM schedule WHERE schedule_date = '$dia' AND schedule_time = '$hora' AND  patient_id='$paciente'  AND psychologist_registration_number = '$psyco'";
                       $result = mysqli_query($conn, $sql);
@@ -327,6 +285,7 @@ session_start();
                     echo "</div></div>";
                     echo "<div class='card-body p-3 p-sm-5'>";
                     echo "<div class='row text-center mx-0'>"; 
+                    $citas = mysqli_query($conn, "SELECT * FROM schedule WHERE schedule_date = '$dia'");
                     mysqli_data_seek($horas, 0);
                     while ($hora = mysqli_fetch_array($horas)) {
                       $ocupada = false;
@@ -344,45 +303,27 @@ session_start();
                       }
                       }
                       // Si se ha seleccionado una hora, guardar la cita en la base de datos
-                      if (isset($_POST['hour'])) {
+                      /*if (isset($_POST['hour'])) {
                       $hora_seleccionada = $_POST['hour'];
                       $paciente = $_SESSION['patient_id'];
                       $fecha_seleccionada = $_POST['schedule_date'];
                       $sql = "INSERT INTO schedule (schedule_date, schedule_time, patient_id) VALUES ('$fecha_seleccionada', '$hora_seleccionada', '$paciente')";
-                      /*if ($conn->query($sql) === TRUE) {
+                      if ($conn->query($sql) === TRUE) {
                       echo "<div class='alert alert-success' role='alert'>Cita guardada exitosamente</div>";
                       } else {
                       echo "<div class='alert alert-danger' role='alert'>Error al guardar la cita: " . $conn->error . "</div>";
-                      }*/
                       }
+                      }*/
                     
                       
                       // Cerrar la conexión a la base de datos
                       $conn->close();
-                      
                       echo "</div></DIV>";
                       echo "</form>";
-                      echo "<script>
-                      function updateSchedule() {
-                        var date = document.getElementById('schedule_date').value;
-                        var xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function() {
-                          if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById('schedule-container').innerHTML = this.responseText;
-                          }
-                        };
-                        xhttp.open('POST', 'safezone', true);
-                        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                        xhttp.send('ajax=true&schedule_date=' + date);
-                        header('Location: safezone');
-                      }
-                      const scheduleDateInput = document.getElementById('schedule_date');
+                    }
+                      selecthours();
 
-                      scheduleDateInput.addEventListener('change', function() {
-                        // código a ejecutar cuando cambia la fecha seleccionada
-                        updateSchedule();
-                      })
-                      </script>";
+                      echo "";
                       ?>
                   </div>
               </div>
@@ -484,6 +425,12 @@ session_start();
     window.addEventListener("load", function() {
     showNextSchedule();
   });
+                         const scheduleDateInput = document.getElementById('schedule_date');
+
+                      scheduleDateInput.addEventListener('change', function() {
+                        // código a ejecutar cuando cambia la fecha seleccionada
+                        selecthours();
+                      })
   function deleteHour(patient_id) {
     if (confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
       // Llamar al archivo PHP para eliminar la cita

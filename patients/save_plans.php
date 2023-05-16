@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($plans as $key => $plan) {
         $plan = trim($plan);
         // Comprobar si el plan ya existe en la base de datos
+        
+        if (!empty($plan)) {
         $stmt = $conn->prepare("SELECT id FROM plans WHERE plans_definition = ? AND patient_id = ? ");
         $stmt->bind_param("si", $plan, $_SESSION['patient_id']);
         $stmt->execute();
@@ -36,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
               }
+            }
           }
         }
         $stmt->close();

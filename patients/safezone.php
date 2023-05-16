@@ -47,19 +47,17 @@ session_start();
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="../assets/img/logo.png" alt="">
+      <a href="index" class="logo d-flex align-items-center">
+        <img src="../assets/img/logo.png" alt="" />
         <span class="d-none d-lg-block">Contigo</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    </div>
     <div class="ms-auto" style="margin-right: 150px;">
-      <b><i class="bi bi-heart-fill"></i>&nbsp;&nbsp; 
+      <b><i class="bi bi-heart-pulse-fill"></i>&nbsp;&nbsp; 
         <?php
         if (isset($_COOKIE['username'])) {
           echo $_COOKIE['username'];
@@ -71,27 +69,28 @@ session_start();
         ?>
       </b>
     </div>
-  </header><!-- End Header -->
+      <!-- End Logo -->
+    </header>
+    <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="safezone">
           <i class="bi bi-grid"></i>
           <span>Mi Espacio Seguro</span>
         </a>
       </li>
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="../index">
           <i class="bi bi-chat-square"></i>
           <span>Contacto</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li>
 
-
+<!-- End Login Page Nav -->
      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="register/psyco-register.php">
           <i class="bi bi-card-list"></i>
@@ -105,9 +104,7 @@ session_start();
           <span>Cerrar Sesión</span>
         </a>
       </li><!-- End Login Page Nav -->
-
     </ul>
-
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">

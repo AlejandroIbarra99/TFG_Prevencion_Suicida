@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['psy_password'] = $contraseña;
     echo "<script>
     setTimeout(function() {
-      window.location.href = '../register/psyco-register.php';
+      window.location.href = '../register/psyco-register';
     }, 2000);
   </script>";
   } else {
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       unset($_SESSION['psy_password']);
        echo "<script>
               setTimeout(function() {
-                window.location.href = '../login/pages-login.php';
+                window.location.href = '../login/pages-login';
               }, 2000);
             </script>";
     } else {

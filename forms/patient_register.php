@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Redireccionamos al formulario de registro de pacientes
     echo "<script>
     setTimeout(function() {
-      window.location.href = '../register/patient-register.php';
+      window.location.href = '../register/patient-register';
     }, 2000);
   </script>";
   } elseif ($result2->num_rows == 0) {
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Redireccionamos al formulario de registro de pacientes
     echo "<script>
     setTimeout(function() {
-      window.location.href = '../register/patient-register.php';
+      window.location.href = '../register/patient-register';
     }, 2000);
   </script>";
   } else {
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "<div class='pt-4 pb-2'><h5 class='card-title text-center pb-0 fs-4'>Paciente registrado correctamente. Redirigiendo...</h5></div>";
       echo "<script>
             setTimeout(function() {
-              window.location.href = '../psychos/patients.php';
+              window.location.href = '../psychos/patients';
             }, 2000);
           </script>";
     } else {

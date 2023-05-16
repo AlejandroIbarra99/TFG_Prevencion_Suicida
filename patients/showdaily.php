@@ -1,16 +1,7 @@
 <?php
 // Conectamos con la base de datos
-$servername = "localhost";
-$username = "sa";
-$password = "1234";
-$dbname = "contigo";
+require '../dbaccess.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Comprobamos la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
 
 if (isset($_SESSION['patient_id'])) {
     $id = $_SESSION['patient_id'];

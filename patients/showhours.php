@@ -1,5 +1,7 @@
 <?php
-function generateSchedule()
+require '../dbaccess.php';
+
+/*function generateSchedule()
 {
 
   echo "<form method='POST'>";
@@ -44,4 +46,5 @@ function generateSchedule()
 
   echo "</div></DIV>";
   echo "</form>";
-}
+}*/
+?>

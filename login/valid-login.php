@@ -6,25 +6,14 @@ if (isset($_COOKIE["user_id"]) && isset($_COOKIE["user_type"]) && isset($_COOKIE
     $_SESSION["user_type"] = $_COOKIE["user_type"];
     $_SESSION["register_number"] = $_COOKIE["register_number"];
 
-    if ($_SESSION["user_type"] == "patient") {
+    /*if ($_SESSION["user_type"] == "patient") {
         header("Location: patient_dashboard.php");
     } elseif ($_SESSION["user_type"] == "psychologist") {
         header("Location: psychologist_dashboard.php");
-    }
+    }*/
 }
 
-// Conectamos con la base de datos
-$servername = "localhost";
-$username = "sa";
-$password = "1234";
-$dbname = "contigo";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Comprobamos la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+require '../dbaccess.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibimos los datos del formulario

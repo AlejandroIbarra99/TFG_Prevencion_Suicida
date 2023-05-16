@@ -7,17 +7,7 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 // Conectamos con la base de datos
-$servername = "localhost";
-$username = "sa";
-$password = "1234";
-$dbname = "contigo";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Comprobamos la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+require '../dbaccess.php';
 
 // Preparamos y vinculamos los parámetros
 $stmt = $conn->prepare("INSERT INTO dailys (daily_entry, patient_id) VALUES (?, ?)");

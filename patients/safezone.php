@@ -261,16 +261,8 @@ session_start();
                     </form>--->
                     <?php
                     // Conectar a la base de datos y seleccionar la tabla de horas
-                    $servername = "localhost";
-                    $username = "sa";
-                    $password = "1234";
-                    $dbname = "contigo";
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    
-                    // Comprobamos la conexión
-                    if ($conn->connect_error) {
-                      die("Conexión fallida: " . $conn->connect_error);
-                    }
+                    require '../dbaccess.php';
+
                     
                     $horas = mysqli_query($conn, "SELECT * FROM hours");
                     

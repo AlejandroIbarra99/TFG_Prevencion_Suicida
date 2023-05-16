@@ -50,7 +50,7 @@
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link collapsed" href="./login/pages-login">
+          <a class="nav-link collapsed" href="../login/pages-login">
             <i class="bi bi-grid"></i>
             <span>Mi Espacio Seguro</span>
           </a>

@@ -1,17 +1,7 @@
 <?php
 session_start();
 // Conectamos con la base de datos
-$servername = "localhost";
-$username = "sa";
-$password = "1234";
-$dbname = "contigo";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Comprobamos la conexión
-if ($conn->connect_error) {
-  die("Conexión fallida: " . $conn->connect_error);
-}
+require '../dbaccess.php';
 
 // Obtener datos del contacto enviados desde el cliente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

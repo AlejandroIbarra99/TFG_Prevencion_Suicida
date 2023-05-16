@@ -1,16 +1,7 @@
 <?php session_start();
 // Conectamos con la base de datos
-$servername = "localhost";
-$username = "sa";
-$password = "1234";
-$dbname = "contigo";
+require '../dbaccess.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Comprobamos la conexión
-if ($conn->connect_error) {
-  die("Conexión fallida: " . $conn->connect_error);
-}
  // Asegúrate de tener el número de colegiado del profesional logueado
 if (isset($_COOKIE["register_number"])) 
 {
@@ -79,7 +70,17 @@ $result = $conn->query($sql);
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
     <div class="ms-auto" style="margin-right: 150px;">
-      <b><i class="bi bi-heart-pulse-fill"></i>&nbsp;&nbsp; Profesional</b>
+      <b><i class="bi bi-heart-pulse-fill"></i>&nbsp;&nbsp; 
+        <?php
+        if (isset($_COOKIE['username'])) {
+          echo $_COOKIE['username'];
+        }
+        else
+        {
+          echo "Paciente";
+        }
+        ?>
+      </b>
     </div>
       <!-- End Logo -->
     </header>
@@ -100,7 +101,7 @@ $result = $conn->query($sql);
         <!--<li class="nav-heading">Pages</li>-->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#">
+          <a class="nav-link collapsed" href="../chats/chats.php">
             <i class="bi bi-chat-dots"></i>
             <span>Chats</span>
           </a>

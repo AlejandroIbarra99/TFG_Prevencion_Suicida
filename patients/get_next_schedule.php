@@ -7,7 +7,7 @@ $id = $_SESSION["patient_id"];
 $psyco = $_SESSION["register_number"];
 
 // Realiza la consulta SQL para obtener la información de la 'safe zone' del paciente seleccionado
-$sql = "SELECT * FROM schedule WHERE patient_id = '$id' AND psychologist_registration_number = '$psyco' ORDER BY schedule_date DESC";
+$sql = "SELECT * FROM schedule WHERE patient_id = '$id' AND psychologist_registration_number = '$psyco' ORDER BY schedule_date DESC LIMIT 5";
 $result = $conn->query($sql);
 
 echo "<table class='table table-striped table-hover'> 

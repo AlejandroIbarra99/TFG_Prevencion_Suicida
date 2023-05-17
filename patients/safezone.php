@@ -281,7 +281,7 @@ session_start();
                     echo "<input hidden type='text' name='paciente' value='" . $_SESSION['patient_id'] . "'>";
                     echo "<div class='card-header bg-dark'>";
                     echo "<div class='mx-0 mb-0 row justify-content-sm-center justify-content-start px-1'>";
-                    echo "<input type='date' id='schedule_date' name='schedule_date' value='$dia' class='datepicker' onchange='updateSchedule()'>";
+                    echo "<input type='date' id='schedule_date' name='schedule_date' value='$dia' class='datepicker'>";
                     echo "</div></div>";
                     echo "<div class='card-body p-3 p-sm-5'>";
                     echo "<div class='row text-center mx-0'>"; 
@@ -424,13 +424,44 @@ session_start();
     // Llama a la función showNextSchedule() después de que se haya cargado la página
     window.addEventListener("load", function() {
     showNextSchedule();
-  });
-                         const scheduleDateInput = document.getElementById('schedule_date');
+});
+ /* const scheduleDateInput = document.getElementById('schedule_date');
+  scheduleDateInput.addEventListener('change', function() {
+    // código a ejecutar cuando cambia la fecha seleccionada    
+    window.location.href = "safezone";
+  })*/
+  const scheduleDateInput = document.getElementById('schedule_date');
+  scheduleDateInput.addEventListener('change', function() {
+  // Obtén el nuevo valor de la fecha seleccionada
+  var nuevoValor = scheduleDateInput.value;
 
-                      scheduleDateInput.addEventListener('change', function() {
-                        // código a ejecutar cuando cambia la fecha seleccionada
-                        selecthours();
-                      })
+  // Crea un objeto XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Define la URL del archivo PHP que procesará la solicitud
+  var url = "safezone"; 
+
+  // Crea los datos que deseas enviar al servidor
+  var datos = "schedule_date=" + encodeURIComponent(nuevoValor);
+
+  // Configura la solicitud AJAX
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  // Define la función de devolución de llamada para manejar la respuesta del servidor
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // La solicitud se completó y se recibió una respuesta válida del servidor
+      console.log("Valor actualizado en el lado del servidor.");
+      // Aquí puedes actualizar el contenido de la página con las horas disponibles devueltas por el servidor
+      // Puedes acceder a la respuesta del servidor a través de: xhr.responseText
+      window.location.href = "safezone";
+    }
+  };
+  // Envía la solicitud al servidor
+  xhr.send(datos);
+});
+
   function deleteHour(patient_id) {
     if (confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
       // Llamar al archivo PHP para eliminar la cita

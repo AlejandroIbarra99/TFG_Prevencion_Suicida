@@ -219,7 +219,7 @@ $result = $conn->query($sql);
   function openChat(patient_id) {
     if (confirm("¿Desea abrir el chat de este paciente?")) {
       // Llamar al archivo PHP para el chat del paciente
-      window.open("../chats/chat_app.html", "Estamos CONTIGO", "height=500, width=400, top=0, left=0");
+      window.open("../chats/chat_app?patient_id=" + patient_id, "Estamos CONTIGO", "height=500, width=400, top=0, left=0");
     }
   }</script>
   </body>

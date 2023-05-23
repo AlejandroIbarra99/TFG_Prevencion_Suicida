@@ -2,9 +2,7 @@
 // Conexión a la base de datos
 require '../dbaccess.php';
 
-if (isset($_SESSION['patient_id'])) {
-    $id = $_SESSION['patient_id'];
-}
+$id = $_GET['patient_id'];
 
 if (isset($_SESSION['register_number'])) {
     $psico = $_SESSION['register_number'];
@@ -19,9 +17,9 @@ $resultado = $conn->query($sql);
 if ($resultado->num_rows > 0) {
 echo "<li class='clearfix'>";
   while($fila = $resultado->fetch_assoc()) {
-    if($tipo = "psychologist")
+    if($tipo == "psychologist")
     {
-        if($fila["shown"] = 1)
+        if($fila["shown"] == 1)
         {
             echo "<div class='message-data text-right'>";
             echo "<span class='message-data-time'>" . $fila["timestamp"] . "</span>";
@@ -43,7 +41,7 @@ echo "<li class='clearfix'>";
     }
     else
     {
-        if($fila["shown"] = 1)
+        if($fila["shown"] == 1)
         {
             echo "<div class='message-data text-right'>";
             echo "<img src='../assets/img/favicon.png' alt='Usuario Contigo'/>";

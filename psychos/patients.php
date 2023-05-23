@@ -89,14 +89,14 @@ $result = $conn->query($sql);
         </li>
         <!-- End Login Page Nav -->
 
-        <!--<li class="nav-heading">Pages</li>-->
+        <!--<li class="nav-heading">Pages</li>
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="../chats/chats.php">
             <i class="bi bi-chat-dots"></i>
             <span>Chats</span>
           </a>
-        </li>
+        </li>-->
         <!-- End Register Page Nav -->
 
         <li class="nav-item">
@@ -129,11 +129,13 @@ $result = $conn->query($sql);
       <table class="table table-striped table-hover">
         <thead>
           <tr>
+            <th scope="col">Chats</th>
             <th scope="col">DNI</th>
             <th scope="col">Nombre</th>
             <th scope="col">Email</th>
             <th scope="col">Fecha de nacimiento</th>
             <th scope="col">Seleccionar</th>
+            <th scope="col">Dar de baja</th>
           </tr>
         </thead>
         <tbody>
@@ -141,6 +143,7 @@ $result = $conn->query($sql);
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
               echo "<tr>";
+              echo "<td><button class='btn btn-success' onclick='openChat(\"" . $row['id'] . "\")'>Abrir chat</button></td>";
               echo "<td>" . $row["dni"] . "</td>";
               echo "<td>" . $row["name"] . "</td>";
               echo "<td>" . $row["email"] . "</td>";
@@ -208,9 +211,15 @@ $result = $conn->query($sql);
     xhr.send();
   }
   function deletePatient(dni) {
-    if (confirm("¿Estás seguro de que deseas dar de baja a este paciente?")) {
+    if (confirm("¿Está seguro de que desea dar de baja a este paciente?")) {
       // Llamar al archivo PHP para eliminar al paciente
       window.location.href = "delete_patient.php?dni=" + dni;
+    }
+  }
+  function openChat(patient_id) {
+    if (confirm("¿Desea abrir el chat de este paciente?")) {
+      // Llamar al archivo PHP para el chat del paciente
+      window.open("../chats/chat_app.html", "Estamos CONTIGO", "height=500, width=400, top=0, left=0");
     }
   }</script>
   </body>

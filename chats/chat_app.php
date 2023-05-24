@@ -34,29 +34,26 @@
                           {
                             $id = $_GET['patient_id']; 
                           }
-                          /*if (isset($_GET['patient_id'])) {
+                          if (isset($_SESSION['register_number'])) {
                               $psico = $_SESSION['register_number'];
-                          }*/
+                          }
 
                           if($tipo == "psychologist") {
                             $sql = "SELECT * FROM patients where id =" .  $_GET["patient_id"];
-                            echo $sql . " psy";
                           }
                           else {
-                            $sql = "SELECT * FROM psychologist where registration_number = '$psico'";
-                            echo $sql . " pat";;
+                            $sql = "SELECT * FROM psychologists where registration_number = '$psico'";
                           }
 
                           $resultado = $conn->query($sql);
 
-                          // Mostrar los planes futuros
+                          // Mostrar los nombres
                           if ($resultado->num_rows > 0) {
                             while($fila = $resultado->fetch_assoc()) {
                               echo $fila["name"];
                             }
                           }
                           ?>
-
                          está <b>CONTIGO</b></h6>
                     </div>
                   </div>

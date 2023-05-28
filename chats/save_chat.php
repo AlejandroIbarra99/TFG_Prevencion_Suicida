@@ -19,7 +19,7 @@ if ($_SESSION["user_type"] == "psychologist") {
     $psico = $_SESSION['register_number'];
 } else {
     $patientid = $_SESSION['patient_id'];
-    $psico = "";
+    $psico = $_SESSION['register_number'];
 }
 
 // Establecemos los parámetros y ejecutamos la consulta

@@ -1,26 +1,13 @@
 <?php
-/*
-// Conexión a la base de datos
-require '../dbaccess.php';
-
-session_start();
-
-$id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
-
-if (isset($_SESSION['register_number'])) {
-    $psico = $_SESSION['register_number'];
-}
-$tipo = isset($_SESSION["user_type"]) ? $_SESSION["user_type"] : '';
-
-// Consulta a la base de datos
-$sql = "SELECT * FROM chats WHERE patient_id = $id AND psychologist_registration_number = '$psico' ORDER BY timestamp DESC";
-echo $sql;
-$resultado = $conn->query($sql);
-*/
 require '../dbaccess.php';
 session_start();
 
-$tipo = $_SESSION["user_type"];
+// Verificar si la clave de array "user_type" está definida
+$tipo = isset($_SESSION["user_type"]) ? $_SESSION["user_type"] : "";
+
+// Verificar si la variable $psico está definida
+$psico = isset($_SESSION['register_number']) ? $_SESSION['register_number'] : "";
+
 if (isset($_GET["patient_id"])) {
     $id = $_GET["patient_id"];
 } else {
@@ -29,15 +16,7 @@ if (isset($_GET["patient_id"])) {
     exit("Error: No se proporcionó el ID del paciente.");
 }
 
-if (isset($_SESSION['register_number'])) {
-    $psico = $_SESSION['register_number'];
-}
-
-if ($tipo == "psychologist") {
-    $sql = "SELECT * FROM chats WHERE patient_id = '$id' AND psychologist_registration_number = '$psico' ORDER BY timestamp DESC";
-} else {
-    $sql = "SELECT * FROM chats WHERE patient_id = '$id' ORDER BY timestamp DESC";
-}
+    $sql = "SELECT * FROM chats WHERE patient_id = '$id' AND psychologist_registration_number = '$psico' ORDER BY timestamp ASC";
 echo $psico . ' ' . $id;
 $resultado = $conn->query($sql);
 // Mostrar los mensajes
@@ -47,7 +26,7 @@ if ($resultado->num_rows > 0) {
         if ($tipo == "psychologist") {
             if ($fila["shown"] == 1) {
                 echo "<div class='message-data text-right'>";
-                echo "<span class='message-data-time'>" . $fila["timestamp"] . "</span>";
+                echo "<span class='message-data-time' style='font-size: 12px;'>" . $fila["timestamp"] . "</span>";
                 echo "</div>";
                 echo " <div class='message my-message'>";
                 echo $fila["message"];
@@ -55,7 +34,7 @@ if ($resultado->num_rows > 0) {
             } else {
                 echo "<div class='message-data'>";
                 echo "<img src='../assets/img/favicon.png' alt='Usuario Contigo'/>";
-                echo "<span class='message-data-time'>" . $fila["timestamp"] . "</span>";
+                echo "<span class='message-data-time' style='font-size: 12px;'>" . $fila["timestamp"] . "</span>";
                 echo "</div>";
                 echo " <div class='message other-message float-right'>";
                 echo $fila["message"];
@@ -65,14 +44,14 @@ if ($resultado->num_rows > 0) {
             if ($fila["shown"] == 1) {
                 echo "<div class='message-data text-right'>";
                 echo "<img src='../assets/img/favicon.png' alt='Usuario Contigo'/>";
-                echo "<span class='message-data-time'>" . $fila["timestamp"] . "</span>";
+                echo "<span class='message-data-time' style='font-size: 12px;'>" . $fila["timestamp"] . "</span>";
                 echo "</div>";
                 echo " <div class='message other-message float-right'>";
                 echo $fila["message"];
                 echo "</div>";
             } else {
                 echo "<div class='message-data'>";
-                echo "<span class='message-data-time'>" . $fila["timestamp"] . "</span>";
+                echo "<span class='message-data-time' style='font-size: 12px;'>" . $fila["timestamp"] . "</span>";
                 echo "</div>";
                 echo " <div class='message my-message'>";
                 echo $fila["message"];

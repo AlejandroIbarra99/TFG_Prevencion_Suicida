@@ -25,22 +25,20 @@
                     <div class="chat-about">
                       <h6 class="m-b-0">
                       <?php 
-                          require '../dbaccess.php';
-                          session_start();
-                          
-                          $tipo = $_SESSION["user_type"];
-                          if(isset($_GET['patient_id']))
-                          {
-                            $id = $_GET['patient_id'];
-                          } 
-                          else
-                          {
-                            $id = $_SESSION['patient_id']; 
-                          }
-                          if (isset($_SESSION['register_number'])) {
-                              $psico = $_SESSION['register_number'];
-                          }
+                        require '../dbaccess.php';
+                        session_start();
 
+                        // Verificar si la clave de array "user_type" está definida
+                        $tipo = isset($_SESSION["user_type"]) ? $_SESSION["user_type"] : "";
+
+                          // Verificar si la clave de array "patient_id" está definida
+                          if (isset($_GET['patient_id'])) {
+                              $id = $_GET['patient_id'];
+                          } else {
+                              $id = isset($_SESSION['patient_id']) ? $_SESSION['patient_id'] : ""; 
+                          }
+                          // Verificar si la variable $psico está definida
+                          $psico = isset($_SESSION['register_number']) ? $_SESSION['register_number'] : "";
                           if($tipo == "psychologist") {
                             $sql = "SELECT * FROM patients where id = '$id'";
                           }
@@ -67,10 +65,11 @@
                 </ul>
               </div>
               <div class="chat-message clearfix">
-                  <form id="messageForm">
+                  <form id="messageForm" action="save_chat.php" method="POST">
                     <div class="input-group mb-0">
-                      <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aquí..."/>
-                      <button class="fa fa-send" id="btnSaveMessage" type="submit"></button>      
+                      <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aquí..." required/>
+                      <input type="hidden" name="patient_id" value="<?php echo $id; ?>">
+                      <input class="fa fa-send" id="btnSaveMessage" type="submit"/>
                     </div>
                   </form>
               </div>
@@ -98,10 +97,9 @@
 
       // Obtener el valor del mensaje
       const message = document.getElementById("message").value;
-
       // Realizar una solicitud AJAX para guardar el mensaje
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", "./save_chat.php", true);
+      xhr.open("POST", "save_chat?patient_id=" + id, true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {

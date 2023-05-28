@@ -68,7 +68,7 @@
                   <form id="messageForm" action="save_chat.php" method="POST">
                     <div class="input-group mb-0">
                       <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aquí..." required/>
-                      <input type="hidden" name="patient_id" value="<?php echo $id; ?>">
+                      <input type="hidden" id="patientId" name="patient_id" value="<?php echo $id; ?>">
                       <input class="fa fa-send" id="btnSaveMessage" type="submit"/>
                     </div>
                   </form>
@@ -92,14 +92,15 @@
     }
 
     // Agregar un evento de envío de formulario
-    document.getElementById("messageForm").addEventListener("submit", function (e) {
+    document.getElementById("messageForm").addEventListener("submit", function (e, ) {
       e.preventDefault();
 
       // Obtener el valor del mensaje
       const message = document.getElementById("message").value;
+      const patientId = document.getElementById("patientId").value;
       // Realizar una solicitud AJAX para guardar el mensaje
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", "save_chat?patient_id=" + id, true);
+      xhr.open("POST", "save_chat?patient_id=" + patientId, true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {

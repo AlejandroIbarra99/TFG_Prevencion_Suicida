@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
     <title>Chat Online</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -63,13 +65,13 @@
                 </div>
               </div>
               <div class="chat-history">
-                <ul id="chattext" class="m-b-0">
+                <ul id="chattext" class="m-b-0"  onload="showChat(<?php  $id ?>)">
                 </ul>
               </div>
               <div class="chat-message clearfix">
-                  <form id="messageForm">
+                  <form action="./save_chat.php" method="POST">
                     <div class="input-group mb-0">
-                      <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aquí..."/>
+                      <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aqui..."/>
                       <button class="fa fa-send" id="btnSaveMessage" type="submit"></button>      
                     </div>
                   </form>
@@ -79,44 +81,47 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-    // Realiza una solicitud AJAX para obtener la información de los chats
-    function showChat(id) {
+    <script type="text/javascript"></script>
+    <script>function showChat(id) {
+      // Realiza una solicitud AJAX para obtener la información de los chats
       const xhr = new XMLHttpRequest();
       xhr.open("GET", "./showchat?patient_id=" + id, true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log("entra al show");
           document.getElementById("chattext").innerHTML = xhr.responseText;
         }
       };
       xhr.send();
+      
     }
+    // Obtener referencia al formulario y al campo de mensaje
+const form = document.querySelector("form");
+const messageInput = document.getElementById("message");
 
-    // Agregar un evento de envío de formulario
-    document.getElementById("messageForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+// Agregar un evento de envío de formulario
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // Evitar que se envíe el formulario de forma predeterminada
 
-      // Obtener el valor del mensaje
-      const message = document.getElementById("message").value;
+  // Obtener el valor del mensaje
+  const message = messageInput.value;
 
-      // Realizar una solicitud AJAX para guardar el mensaje
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "./save_chat.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          // Actualizar la lista de chats después de enviar el mensaje
-          showChat(<?php echo $id; ?>);
-        }
-      };
-      xhr.send("message=" + encodeURIComponent(message));
+  // Realizar una solicitud AJAX para guardar el mensaje
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "../chats/save_chat", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      // Actualizar la lista de chats después de enviar el mensaje
+      showChat(<?php echo $_GET['patient_id']; ?>);
+    }
+  };
+  xhr.send("message=" + encodeURIComponent(message));
 
-      // Limpiar el campo de mensaje
-      document.getElementById("message").value = "";
-    });
+  // Limpiar el campo de mensaje
+  messageInput.value = "";
+});
 
-    // Mostrar los chats iniciales al cargar la página
-    showChat(<?php echo $id; ?>);
     </script>
   </body>
 </html>

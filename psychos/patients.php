@@ -3,10 +3,6 @@
 require '../dbaccess.php';
 
  // Asegúrate de tener el número de colegiado del profesional logueado
-if (isset($_COOKIE["register_number"])) 
-{
-    $_SESSION['register_number'] = $_COOKIE['register_number'];
-}
 $colegiado = $_SESSION['register_number'];
 $sql = "SELECT * FROM patients WHERE psychologist_registration_number = '$colegiado' AND Active = 0";
 $result = $conn->query($sql);

@@ -69,7 +69,7 @@
                     <div class="input-group mb-0">
                       <input type="text" class="form-control" id="message" placeholder="Escriba el mensaje aquí..." required/>
                       <input type="hidden" id="patientId" name="patient_id" value="<?php echo $id; ?>">
-                      <input class="fa fa-send" id="btnSaveMessage" type="submit"/>
+                      <button class="fa fa-send" id="btnSaveMessage" type="submit"></button>
                     </div>
                   </form>
               </div>
@@ -114,8 +114,16 @@
       document.getElementById("message").value = "";
     });
 
-    // Mostrar los chats iniciales al cargar la página
-    showChat(<?php echo $id; ?>);
+    function callShowChat() {
+  // Obtener el ID del paciente
+  const patientId = <?php echo $id; ?>;
+  
+  // Llamar a showChat con el ID del paciente
+  showChat(patientId);
+}
+
+// Llamar a showChat cada diez segundos
+setInterval(callShowChat, 5000);
     </script>
   </body>
 </html>

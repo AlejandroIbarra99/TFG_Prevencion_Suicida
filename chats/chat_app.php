@@ -122,8 +122,8 @@
   showChat(patientId);
 }
 
-// Llamar a showChat cada diez segundos
-setInterval(callShowChat, 5000);
+// Llamar a showChat cada dos segundos
+setInterval(callShowChat, 2000);
     </script>
   </body>
 </html>

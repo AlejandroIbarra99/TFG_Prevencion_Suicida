@@ -17,7 +17,6 @@ if (isset($_GET["patient_id"])) {
 }
 
     $sql = "SELECT *, DATE_FORMAT(timestamp, '%H:%i') AS time FROM chats WHERE patient_id = '$id' AND psychologist_registration_number = '$psico' ORDER BY timestamp ASC";
-echo $psico . ' ' . $id;
 $resultado = $conn->query($sql);
 // Mostrar los mensajes
 if ($resultado->num_rows > 0) {

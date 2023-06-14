@@ -6,23 +6,15 @@ $_SESSION = array();
 
 // Si se desea destruir la sesión completamente, borrar también la cookie de sesión.
 // Nota: ¡Esto destruirá la sesión y no la información de la sesión!
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(
-        session_name(),
-        '',
-        time() - 42000,
-        $params["path"],
-        $params["domain"],
-        $params["secure"],
-        $params["httponly"]
-    );
-}
+    setcookie("patient_id","",time() - 42000,"/");
+    setcookie("username","",time() - 42000, "/");
+    setcookie("user_type","",time() - 42000, "/");
+    setcookie("user_id","",time() - 42000,"/");
 
 // Finalmente, destruye la sesión
 session_destroy();
 
 // Redirige al usuario a la página de inicio (o cualquier otra página que desees)
-header("Location: ./login/pages-login.php");
+header("Location: ./index");
 exit;
 ?>

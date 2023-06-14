@@ -1,6 +1,6 @@
 var leftPos = screen.width - 400;
 var topPos = screen.width - 200;
-function chat(){
+function chat_inicia(){
     window.location.href = './chats/chats', 'Chats';
 }
 function chat_online(){

@@ -2,7 +2,7 @@
 session_start();
 
 // Comprobamos si el usuario ha iniciado sesión
-if (!isset($_SESSION["user_id"])) {
+if (!isset($_COOKIE["user_id"])) {
     die("No ha iniciado sesión.");
 }
 

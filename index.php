@@ -49,7 +49,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="./index" class="logo d-flex align-items-center">
           <img src="assets/img/logo.png" alt="" />
           <span class="d-none d-lg-block">Contigo</span>
         </a>
@@ -63,9 +63,18 @@
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link collapsed" href="./login/pages-login">
-            <i class="bi bi-grid"></i>
-            <span>Mi Espacio Seguro</span>
+        <?php
+                if (isset($_COOKIE['patient_id'])) {
+                  echo '<a class="nav-link collapsed" href="./patients/safezone">';
+                  echo '<i class="bi bi-grid"></i>';
+                    echo '<span>Mi Espacio Seguro</span>';
+                } 
+                else{
+                  echo '<a class="nav-link collapsed" href="login/pages-login">';
+                  echo '<i class="bi bi-grid"></i>';
+                  echo '<span>Mi Espacio Seguro</span>';
+                }
+                ?>            
           </a>
         </li>
         <li class="nav-item">
@@ -87,10 +96,19 @@
          End Register Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="login/pages-login.php">
-            <i class="bi bi-box-arrow-in-right"></i>
-
-            <span>Iniciar Sesión</span>
+            <?php
+                if (isset($_COOKIE['patient_id'])) {
+                  echo '<a class="nav-link collapsed" href="./logout">';
+                  echo '<i class="bi bi-box-arrow-in-right"></i>';
+                    echo '<span>Cerrar Sesión</span>';
+                } 
+                else{
+                  echo '<a class="nav-link collapsed" href="login/pages-login.php">';
+                  echo '<i class="bi bi-box-arrow-in-right"></i>';
+                  echo '<span>Iniciar Sesión</span>';
+                }
+                ?>
+            
           </a>
         </li>
         <!-- End Login Page Nav -->
@@ -146,7 +164,14 @@
                 Si tienes pensamientos o ideas suicidas puedes hablar con un/a
                 psicólogo/a a través de este chat.<br />
                 <br />
-                <button class="btn btn-primary me-md-2" onclick="chat()">Acceder al chat</button>
+                <?php
+                if (isset($_COOKIE['patient_id'])) {
+                    echo '<button class="btn btn-primary me-md-2" onclick="chat()">Acceder al chat</button>';
+                } 
+                else{
+                  echo '<button class="btn btn-primary me-md-2" onclick="loginpagechat()">Acceder al chat</button>';
+                }
+                ?>
                 <br />
               </form>
             </div>
@@ -171,9 +196,14 @@
                 </p>
                 <span><b>"Mi espacio seguro"</b> es una herramienta en la que podrás crear tu plan de seguridad, pedir cita con tu psicólogo/a, crear una lista de contactos en los que puedas confiar, entre otras funciones.</span><br><br>
                 <i class="bi bi-exclamation-triangle"> Para acceder a este espacio deberás tener una cuenta creada por tu especialista.</i><br><br>
-                <button class="btn btn-primary me-md-2" onclick="loginpage()">
-                  Acceder a <b>MI ESPACIO SEGURO</b>
-                </button>
+                <?php
+                if (isset($_COOKIE['patient_id'])) {
+                    echo '<button class="btn btn-primary me-md-2" onclick="openzone()">Acceder a <b>MI ESPACIO SEGURO</b></button>';
+                } 
+                else{
+                  echo '<button class="btn btn-primary me-md-2" onclick="loginpage()">Acceder a <b>MI ESPACIO SEGURO</b></button>';
+                }
+                ?>
                 <br />
               </div>
             </form>
@@ -201,6 +231,7 @@
               </p>
               <ul>
                 <li><a href="https://www.cop.es/pdf/Guia-digital.pdf" target="_blank">Colegio Oficial de Psicólogos</a></li>
+                <li><a href="https://telefonodelaesperanza.org/assets/Guia%20del%20suicidio.pdf" target="_blank">Guía del suicidio del Teléfono de la Esperanza</a></li>
                 <li><a href="https://consaludmental.org/publicaciones/Guiaprevencionsuicidio.pdf" target="_blank">Consejería Andaluza de Salud</a></li>
                 <li><a href="http://www.madrid.org/bvirtual/BVCM017853.pdf" target="_blank">Guía de Prevención de las Conductas Suicidas de la Comunidad de Madrid</a></li>
                 <li><a href="https://www.fsme.es/centro-de-documentaci%C3%B3n-sobre-conducta-suicida/gu%C3%ADas-sobre-conducta-suicida/la-conducta-suicida-gpc-sns/" target="_blank">Fundación Española para la Prevención del Suicidio</a></li>
@@ -237,6 +268,12 @@
     <!-- Template Main JS File -->
     <script>function loginpage(){
       window.open('./login/pages-login', "_self");
+  }
+  function loginpagechat(){
+      window.open('./login/pages-login_chat', "_self");
+  }
+  function openzone(){
+      window.open('../patients/safezone', "_self");
   }
   if ("geolocation" in navigator) {
         // el navegador admite geolocalización

@@ -51,7 +51,7 @@ $result = $conn->query($sql);
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index" class="logo d-flex align-items-center">
+        <a href="../index" class="logo d-flex align-items-center">
           <img src="../assets/img/logo.png" alt="" />
           <span class="d-none d-lg-block">Contigo</span>
         </a>
@@ -195,6 +195,14 @@ $result = $conn->query($sql);
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/map.js"></script>
+    <script>
+  const scheduleDateInput = document.getElementById('schedule_date');
+  const fechaSeleccionada = document.getElementById('fechaSeleccionada');
+
+  scheduleDateInput.addEventListener('change', function() {
+    fechaSeleccionada.value = scheduleDateInput.value;
+  });
+</script>
     <script>function showSafeZone(id) {
     // Realiza una solicitud AJAX para obtener la información de la 'safe zone' del paciente seleccionado
     const xhr = new XMLHttpRequest();
@@ -202,6 +210,8 @@ $result = $conn->query($sql);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         document.getElementById("safe_zone_info").innerHTML = xhr.responseText;
+        var fechaSeleccionada = document.getElementById("datepicker").value;
+        document.getElementById("fechaSeleccionada").value = fechaSeleccionada;
       }
     };
     xhr.send();

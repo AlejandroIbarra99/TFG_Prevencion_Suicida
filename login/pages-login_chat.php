@@ -56,8 +56,8 @@
                     <h5 class="card-title text-center pb-0 fs-4">Accede a tu cuenta</h5>
                     <p class="text-center small">Introduce tu nombre de usuario y contraseña</p>
                   </div>
-                  
-                  <form class="row g-3 needs-validation" action="valid-login.php" method="post" novalidate>
+
+                  <form class="row g-3 needs-validation" action="valid-login_chat.php" method="post" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Nombre de usuario</label>
@@ -81,19 +81,20 @@
                       </div>
                     </div>
                     <div class="col-12">
+                    <?php
+                      // Verificar si existe un mensaje de error en la variable de sesión
+                      if (isset($_COOKIE['error_message'])) {?>
+                        <script>alert("Nombre de usuario o contraseña incorrectos");</script> 
+                        <?php unset($_COOKIE['error_message']); // Limpiar la variable de sesión después de mostrar el mensaje
+                      }
+                    ?>
                       <button id="buttonLogin" class="btn btn-primary w-100" type="submit">Acceder</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">¿No tienes cuenta? Ponte en contacto con tu especialista</p>
                     </div>
                   </form>
-                  <?php
-                    // Verificar si existe un mensaje de error en la variable de sesión
-                      if (isset($_COOKIE['error_message'])) {?>
-                        <script>alert("Nombre de usuario o contraseña incorrectos");</script> 
-                        <?php unset($_COOKIE['error_message']); // Limpiar la variable de sesión después de mostrar el mensaje
-                      }
-                    ?>
+
                 </div>
               </div>
 

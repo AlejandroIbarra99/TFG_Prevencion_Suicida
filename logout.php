@@ -10,6 +10,7 @@ $_SESSION = array();
     setcookie("username","",time() - 42000, "/");
     setcookie("user_type","",time() - 42000, "/");
     setcookie("user_id","",time() - 42000,"/");
+    setcookie("error_message","", time() - 42000,"/");
 
 // Finalmente, destruye la sesión
 session_destroy();
